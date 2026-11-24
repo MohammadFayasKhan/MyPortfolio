@@ -6,6 +6,10 @@ export function SmoothScroller({ children }: { children: React.ReactNode }) {
   const isInitRef = useRef(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
     let smootherInstance: any = null;
     let resizeObserver: ResizeObserver | null = null;
     let cancelled = false;

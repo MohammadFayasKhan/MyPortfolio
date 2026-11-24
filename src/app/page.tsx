@@ -1,7 +1,6 @@
 "use client";
 
 import BlurFade from "@/components/magicui/blur-fade";
-import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { CertificationCard } from "@/components/certification-card";
 import { useFileViewer } from "@/components/file-viewer-context";
 import { PatentCard } from "@/components/patent-card";
@@ -9,7 +8,6 @@ import { ProjectCard } from "@/components/project-card";
 import { ProjectModal } from "@/components/project-modal";
 import { ResearchCard } from "@/components/research-card";
 import { ResumeCard } from "@/components/resume-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TiltCard } from "@/components/ui/tilt-card";
@@ -35,15 +33,44 @@ import {
 import Link from "next/link";
 import Markdown from "react-markdown";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion, Variants } from "framer-motion";
 
 const BLUR_FADE_DELAY = 0.04;
+
+const LINEAR_TRANSITION = {
+  duration: 0.8,
+  ease: [0.25, 0.1, 0.25, 1],
+};
+
+const LINEAR_VARIANTS: Variants = {
+  hidden: {
+    filter: "blur(10px)",
+    transform: "translateY(20%)",
+    opacity: 0,
+  },
+  visible: {
+    filter: "blur(0px)",
+    transform: "translateY(0%)",
+    opacity: 1,
+    transition: LINEAR_TRANSITION,
+  },
+};
 
 export default function Page() {
   const { previewFile, downloadFile } = useFileViewer();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   const handleOpenProject = (project: Project) => {
     setSelectedProject(project);
@@ -70,6 +97,8 @@ export default function Page() {
     }
   };
 
+  const heroWords = `Hi, I'm ${DATA.name} 👋`.split(" ");
+
   return (
     <main className="flex flex-col min-h-screen space-y-14 sm:space-y-16 pb-16">
       {/* Background Ambient Glows */}
@@ -81,9 +110,14 @@ export default function Page() {
 
       {/* ===================== HERO SECTION ===================== */}
       <section id="hero" className="pt-0 scroll-mt-12">
-        <div className="space-y-6">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.04 }}
+          className="space-y-6"
+        >
           {/* Availability Badge */}
-          <BlurFade delay={BLUR_FADE_DELAY}>
+          <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 shadow-sm">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
@@ -91,46 +125,62 @@ export default function Page() {
               </span>
               Available for AI Systems Engineering and Research Roles
             </div>
-          </BlurFade>
+          </motion.div>
 
           {/* Name & Headline & Avatar */}
           <div className="flex flex-col-reverse sm:flex-row sm:items-start justify-between gap-6">
             <div className="flex flex-col space-y-2 flex-1">
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY * 2}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name} 👋`}
-              />
-              <BlurFade delay={BLUR_FADE_DELAY * 3}>
-                <p className="text-base sm:text-lg font-medium text-primary">
-                  {DATA.headline}
-                </p>
-              </BlurFade>
-              <BlurFade delay={BLUR_FADE_DELAY * 4}>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
-                  {DATA.description}
-                </p>
-              </BlurFade>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground flex flex-wrap items-baseline gap-x-2">
+                {heroWords.map((word, index) => (
+                  <React.Fragment key={index}>
+                    <motion.span
+                      className="inline-block"
+                      variants={LINEAR_VARIANTS}
+                      transition={LINEAR_TRANSITION}
+                    >
+                      {word}
+                    </motion.span>
+                    {index < heroWords.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </h1>
+
+              <motion.p
+                variants={LINEAR_VARIANTS}
+                transition={LINEAR_TRANSITION}
+                className="text-base sm:text-lg font-medium text-primary"
+              >
+                {DATA.headline}
+              </motion.p>
+
+              <motion.p
+                variants={LINEAR_VARIANTS}
+                transition={LINEAR_TRANSITION}
+                className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl"
+              >
+                {DATA.description}
+              </motion.p>
 
               {/* Quick Location & Academic Pill */}
-              <BlurFade delay={BLUR_FADE_DELAY * 5}>
-                <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1">
-                    <MapPinIcon className="size-3.5 text-muted-foreground/80" />
-                    {DATA.location}
-                  </span>
-                  <span className="text-muted-foreground/40">•</span>
-                  <span className="inline-flex items-center gap-1 font-medium text-foreground/90">
-                    <AwardIcon className="size-3.5 text-amber-500" />
-                    CGPA: 9.66 / 10 (LPU Honor Roll 2025)
-                  </span>
-                </div>
-              </BlurFade>
+              <motion.div
+                variants={LINEAR_VARIANTS}
+                transition={LINEAR_TRANSITION}
+                className="flex flex-wrap items-center gap-3 pt-1 text-xs text-muted-foreground"
+              >
+                <span className="inline-flex items-center gap-1">
+                  <MapPinIcon className="size-3.5 text-muted-foreground/80" />
+                  {DATA.location}
+                </span>
+                <span className="text-muted-foreground/40">•</span>
+                <span className="inline-flex items-center gap-1 font-medium text-foreground/90">
+                  <AwardIcon className="size-3.5 text-amber-500" />
+                  CGPA: 9.66 / 10 (LPU Honor Roll 2025)
+                </span>
+              </motion.div>
 
               {/* Action Buttons */}
-              <BlurFade delay={BLUR_FADE_DELAY * 6}>
-                <div className="flex flex-wrap items-center gap-2.5 pt-3">
+              <div className="flex flex-wrap items-center gap-2.5 pt-3">
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button
                     size="sm"
                     className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
@@ -147,6 +197,8 @@ export default function Page() {
                     <EyeIcon className="size-3.5" />
                     Preview Resume
                   </Button>
+                </motion.div>
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button
                     variant="outline"
                     size="sm"
@@ -162,36 +214,44 @@ export default function Page() {
                     <DownloadIcon className="size-3.5" />
                     Download
                   </Button>
+                </motion.div>
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
                     <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
                       <BriefcaseIcon className="size-3.5" />
                       Featured Projects
                     </Link>
                   </Button>
+                </motion.div>
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
                     <Link href="#patents" onClick={(e) => scrollToSection(e, "patents")}>
                       <ShieldCheckIcon className="size-3.5" />
                       View Patents
                     </Link>
                   </Button>
+                </motion.div>
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
                     <Link href="#research" onClick={(e) => scrollToSection(e, "research")}>
                       <BookOpenIcon className="size-3.5" />
                       Research Paper
                     </Link>
                   </Button>
+                </motion.div>
+                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
                   <Button asChild variant="ghost" size="sm" className="h-9 gap-1.5 px-3 text-xs font-medium">
                     <Link href="#contact" onClick={(e) => scrollToSection(e, "contact")}>
                       <MailIcon className="size-3.5" />
                       Contact
                     </Link>
                   </Button>
-                </div>
-              </BlurFade>
+                </motion.div>
+              </div>
             </div>
 
             {/* Profile Avatar */}
-            <BlurFade delay={BLUR_FADE_DELAY * 3} className="flex-shrink-0">
+            <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION} className="flex-shrink-0">
               <TiltCard maxTilt={8} scale={1.03} className="w-fit">
                 <div className="relative size-36 sm:size-44 md:size-48 lg:size-52 rounded-3xl border-2 border-border/80 p-2 sm:p-2.5 shadow-xl bg-card">
                   <div className="relative size-full rounded-2xl overflow-hidden shadow-inner bg-muted">
@@ -206,9 +266,9 @@ export default function Page() {
                   </div>
                 </div>
               </TiltCard>
-            </BlurFade>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ===================== ABOUT SECTION ===================== */}

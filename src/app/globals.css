@@ -146,28 +146,11 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
 
-/* Smooth Scroller GSAP Wrapper styles */
-html.smoother-active {
-  scroll-behavior: auto !important;
-}
-
-html.smoother-active #smooth-wrapper {
-  overflow: hidden;
-  position: fixed;
-  height: 100%;
+/* Smooth Content Container */
+#smooth-wrapper,
+#smooth-content {
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-}
-
-html.smoother-active #smooth-content {
   overflow: visible;
-  width: 100%;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 /* Hide scrollbar utility */

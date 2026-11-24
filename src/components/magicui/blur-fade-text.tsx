@@ -1,84 +1,54 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion, Variants } from "framer-motion";
-import { useMemo } from "react";
+import { motion, Variants } from "framer-motion";
+import React, { useMemo } from "react";
 
 interface BlurFadeTextProps {
   text: string;
   className?: string;
-  variant?: {
-    hidden: { y: number };
-    visible: { y: number };
-  };
+  variant?: Variants;
   duration?: number;
-  characterDelay?: number;
+  wordDelay?: number;
   delay?: number;
   yOffset?: number;
-  animateByCharacter?: boolean;
 }
+
+const linearTransition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const };
+const defaultLinearVariants: Variants = {
+  hidden: { filter: "blur(10px)", y: 16, opacity: 0 },
+  visible: { filter: "blur(0px)", y: 0, opacity: 1 },
+};
+
 const BlurFadeText = ({
   text,
   className,
   variant,
-  characterDelay = 0.02,
+  duration = 0.8,
+  wordDelay = 0.04,
   delay = 0,
-  yOffset = 6,
-  animateByCharacter = false,
 }: BlurFadeTextProps) => {
-  const defaultVariants: Variants = {
-    hidden: { y: yOffset, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
-  const combinedVariants = variant || defaultVariants;
-  const characters = useMemo(() => Array.from(text), [text]);
-
-  if (animateByCharacter) {
-    return (
-      <div className="flex">
-        <AnimatePresence>
-          {characters.map((char, i) => (
-            <motion.span
-              key={i}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={combinedVariants}
-              transition={{
-                delay: Math.min(delay + i * characterDelay, 0.15),
-                duration: 0.28,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={cn("inline-block", className)}
-              style={{ width: char.trim() === "" ? "0.2em" : "auto" }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </AnimatePresence>
-      </div>
-    );
-  }
+  const words = useMemo(() => text.split(" "), [text]);
+  const activeVariants = variant || defaultLinearVariants;
 
   return (
-    <div className="flex">
-      <AnimatePresence>
+    <motion.span
+      initial="hidden"
+      animate="visible"
+      transition={{ staggerChildren: wordDelay, delayChildren: delay }}
+      className={cn("inline-flex flex-wrap gap-x-2 gap-y-1", className)}
+    >
+      {words.map((word, index) => (
         <motion.span
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          variants={combinedVariants}
-          transition={{
-            delay: Math.min(delay, 0.12),
-            duration: 0.28,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className={cn("inline-block", className)}
+          key={index}
+          className="inline-block"
+          transition={{ ...linearTransition, duration }}
+          variants={activeVariants}
         >
-          {text}
+          {word}
         </motion.span>
-      </AnimatePresence>
-    </div>
+      ))}
+    </motion.span>
   );
 };
 

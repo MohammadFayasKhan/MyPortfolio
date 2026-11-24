@@ -90,12 +90,19 @@ export function SmoothScroller({ children }: { children: React.ReactNode }) {
       });
 
     (async () => {
-      for (const src of scripts) {
+      try {
+        await loadScript("/gsap/gsap.min.js");
         if (cancelled) return;
-        await loadScript(src);
-      }
-      if (!cancelled) {
-        initScrollSmoother();
+        await Promise.all([
+          loadScript("/gsap/ScrollTrigger.min.js"),
+          loadScript("/gsap/ScrollToPlugin.min.js"),
+          loadScript("/gsap/ScrollSmoother.min.js"),
+        ]);
+        if (!cancelled) {
+          initScrollSmoother();
+        }
+      } catch (e) {
+        console.warn("GSAP scroller notice:", e);
       }
     })();
 

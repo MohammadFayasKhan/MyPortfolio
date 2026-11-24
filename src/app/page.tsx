@@ -2,6 +2,7 @@
 
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
+import { linearContainerVariants, linearVariants } from "@/components/blur-reveal";
 import { CertificationCard } from "@/components/certification-card";
 import { PatentCard } from "@/components/patent-card";
 import { ProjectCard } from "@/components/project-card";
@@ -30,6 +31,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 
 const BLUR_FADE_DELAY = 0.04;
@@ -74,9 +76,14 @@ export default function Page() {
 
       {/* ===================== HERO SECTION ===================== */}
       <section id="hero" className="pt-2 sm:pt-6 scroll-mt-20">
-        <div className="space-y-6">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={linearContainerVariants}
+          className="space-y-6"
+        >
           {/* Availability Badge */}
-          <BlurFade delay={BLUR_FADE_DELAY}>
+          <motion.div variants={linearVariants}>
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 shadow-sm">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
@@ -84,82 +91,93 @@ export default function Page() {
               </span>
               Available for AI Systems Engineering and Research Roles
             </div>
-          </BlurFade>
+          </motion.div>
 
           {/* Name & Headline & Avatar */}
           <div className="flex flex-col-reverse sm:flex-row sm:items-start justify-between gap-6">
             <div className="flex flex-col space-y-2 flex-1">
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY * 2}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name} 👋`}
-              />
-              <BlurFade delay={BLUR_FADE_DELAY * 3}>
-                <p className="text-base sm:text-lg font-medium text-primary">
-                  {DATA.headline}
-                </p>
-              </BlurFade>
-              <BlurFade delay={BLUR_FADE_DELAY * 4}>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
-                  {DATA.description}
-                </p>
-              </BlurFade>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground flex flex-wrap gap-x-2.5 gap-y-1">
+                {`Hi, I'm ${DATA.name} 👋`.split(" ").map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className="inline-block"
+                    variants={linearVariants}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </h1>
+
+              <motion.p
+                variants={linearVariants}
+                className="text-base sm:text-lg font-medium text-primary"
+              >
+                {DATA.headline}
+              </motion.p>
+
+              <motion.p
+                variants={linearVariants}
+                className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl"
+              >
+                {DATA.description}
+              </motion.p>
 
               {/* Quick Location & Academic Pill */}
-              <BlurFade delay={BLUR_FADE_DELAY * 5}>
-                <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1">
-                    <MapPinIcon className="size-3.5 text-muted-foreground/80" />
-                    {DATA.location}
-                  </span>
-                  <span className="text-muted-foreground/40">•</span>
-                  <span className="inline-flex items-center gap-1 font-medium text-foreground/90">
-                    <AwardIcon className="size-3.5 text-amber-500" />
-                    CGPA: 9.66 / 10 (LPU Honor Roll 2025)
-                  </span>
-                </div>
-              </BlurFade>
+              <motion.div
+                variants={linearVariants}
+                className="flex flex-wrap items-center gap-3 pt-1 text-xs text-muted-foreground"
+              >
+                <span className="inline-flex items-center gap-1">
+                  <MapPinIcon className="size-3.5 text-muted-foreground/80" />
+                  {DATA.location}
+                </span>
+                <span className="text-muted-foreground/40">•</span>
+                <span className="inline-flex items-center gap-1 font-medium text-foreground/90">
+                  <AwardIcon className="size-3.5 text-amber-500" />
+                  CGPA: 9.66 / 10 (LPU Honor Roll 2025)
+                </span>
+              </motion.div>
 
               {/* Action Buttons */}
-              <BlurFade delay={BLUR_FADE_DELAY * 6}>
-                <div className="flex flex-wrap items-center gap-2.5 pt-3">
-                  <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm">
-                    <a href="/Mohammad_Fayas_Khan_Resume.pdf" target="_blank" rel="noopener noreferrer">
-                      <DownloadIcon className="size-3.5" />
-                      Download Resume
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
-                      <BriefcaseIcon className="size-3.5" />
-                      Featured Projects
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#patents" onClick={(e) => scrollToSection(e, "patents")}>
-                      <ShieldCheckIcon className="size-3.5" />
-                      View Patents
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#research" onClick={(e) => scrollToSection(e, "research")}>
-                      <BookOpenIcon className="size-3.5" />
-                      Research Paper
-                    </Link>
-                  </Button>
-                  <Button asChild variant="ghost" size="sm" className="h-9 gap-1.5 px-3 text-xs font-medium">
-                    <Link href="#contact" onClick={(e) => scrollToSection(e, "contact")}>
-                      <MailIcon className="size-3.5" />
-                      Contact
-                    </Link>
-                  </Button>
-                </div>
-              </BlurFade>
+              <motion.div
+                variants={linearVariants}
+                className="flex flex-wrap items-center gap-2.5 pt-3"
+              >
+                <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm">
+                  <a href="/Mohammad_Fayas_Khan_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                    <DownloadIcon className="size-3.5" />
+                    Download Resume
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                  <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
+                    <BriefcaseIcon className="size-3.5" />
+                    Featured Projects
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                  <Link href="#patents" onClick={(e) => scrollToSection(e, "patents")}>
+                    <ShieldCheckIcon className="size-3.5" />
+                    View Patents
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                  <Link href="#research" onClick={(e) => scrollToSection(e, "research")}>
+                    <BookOpenIcon className="size-3.5" />
+                    Research Paper
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm" className="h-9 gap-1.5 px-3 text-xs font-medium">
+                  <Link href="#contact" onClick={(e) => scrollToSection(e, "contact")}>
+                    <MailIcon className="size-3.5" />
+                    Contact
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
 
             {/* Profile Avatar */}
-            <BlurFade delay={BLUR_FADE_DELAY * 3} className="flex-shrink-0">
+            <motion.div variants={linearVariants} className="flex-shrink-0">
               <TiltCard maxTilt={8} scale={1.03} className="w-fit">
                 <div className="relative size-36 sm:size-44 md:size-48 lg:size-52 rounded-3xl border-2 border-border/80 p-2 sm:p-2.5 shadow-xl bg-card">
                   <Avatar className="size-full rounded-2xl overflow-hidden shadow-inner">
@@ -174,9 +192,9 @@ export default function Page() {
                   </Avatar>
                 </div>
               </TiltCard>
-            </BlurFade>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ===================== ABOUT SECTION ===================== */}

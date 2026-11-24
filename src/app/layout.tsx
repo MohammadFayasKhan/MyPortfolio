@@ -6,6 +6,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -105,6 +106,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <Script src="/gsap/gsap.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollTrigger.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollToPlugin.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollSmoother.min.js" strategy="beforeInteractive" />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <TooltipProvider delayDuration={0}>
             <SmoothScroller>

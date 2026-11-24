@@ -6,10 +6,7 @@ import { useRef } from "react";
 interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
-  variant?: {
-    hidden: { y: number };
-    visible: { y: number };
-  };
+  variant?: Variants;
   duration?: number;
   delay?: number;
   yOffset?: number;
@@ -21,12 +18,12 @@ const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.28,
+  duration = 0.75,
   delay = 0,
-  yOffset = 6,
+  yOffset = 14,
   inView = true,
-  inViewMargin = "40px",
-  blur = "0px",
+  inViewMargin = "60px",
+  blur = "10px",
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
@@ -35,12 +32,12 @@ const BlurFade = ({
     hidden: {
       y: yOffset,
       opacity: 0,
-      ...(blur && blur !== "0px" ? { filter: `blur(${blur})` } : {}),
+      filter: `blur(${blur})`,
     },
     visible: {
       y: 0,
       opacity: 1,
-      filter: "none",
+      filter: "blur(0px)",
     },
   };
   const combinedVariants = variant || defaultVariants;
@@ -55,7 +52,7 @@ const BlurFade = ({
         transition={{
           delay: Math.min(delay, 0.12),
           duration,
-          ease: [0.16, 1, 0.3, 1],
+          ease: [0.25, 0.1, 0.25, 1],
         }}
         className={className}
       >

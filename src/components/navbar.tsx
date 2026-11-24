@@ -17,7 +17,12 @@ export default function Navbar() {
       const elem = document.getElementById(targetId);
       if (elem) {
         e.preventDefault();
-        elem.scrollIntoView({ behavior: "smooth", block: "start" });
+        const smoother = (window as any).ScrollSmoother?.get?.();
+        if (smoother) {
+          smoother.scrollTo(elem, true, "top 60px");
+        } else {
+          elem.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         if (typeof window !== "undefined") {
           window.history.pushState(null, "", `#${targetId}`);
         }

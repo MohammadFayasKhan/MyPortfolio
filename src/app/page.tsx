@@ -51,7 +51,12 @@ export default function Page() {
     e.preventDefault();
     const elem = document.getElementById(sectionId);
     if (elem) {
-      elem.scrollIntoView({ behavior: "smooth", block: "start" });
+      const smoother = (window as any).ScrollSmoother?.get?.();
+      if (smoother) {
+        smoother.scrollTo(elem, true, "top 60px");
+      } else {
+        elem.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
       if (typeof window !== "undefined") {
         window.history.pushState(null, "", `#${sectionId}`);
       }

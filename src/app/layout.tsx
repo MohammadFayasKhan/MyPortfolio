@@ -1,3 +1,4 @@
+import { FileViewerProvider } from "@/components/file-viewer-context";
 import Navbar from "@/components/navbar";
 import { SmoothScroller } from "@/components/smooth-scroller";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -82,12 +83,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon.svg?v=3", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=3", sizes: "any" },
+      { url: "/icon.png?v=3", sizes: "192x192", type: "image/png" },
     ],
+    shortcut: "/favicon.ico?v=3",
     apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png?v=3", sizes: "180x180", type: "image/png" },
     ],
   },
 };
@@ -107,12 +109,14 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <TooltipProvider delayDuration={0}>
-            <SmoothScroller>
-              <div className="max-w-4xl mx-auto py-10 sm:py-16 px-4 sm:px-6 md:px-8">
-                {children}
-              </div>
-            </SmoothScroller>
-            <Navbar />
+            <FileViewerProvider>
+              <SmoothScroller>
+                <div className="max-w-4xl mx-auto pt-1 sm:pt-2 pb-16 sm:pb-20 px-4 sm:px-6 md:px-8">
+                  {children}
+                </div>
+              </SmoothScroller>
+              <Navbar />
+            </FileViewerProvider>
           </TooltipProvider>
         </ThemeProvider>
       </body>

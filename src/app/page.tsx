@@ -3,6 +3,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { CertificationCard } from "@/components/certification-card";
+import { useFileViewer } from "@/components/file-viewer-context";
 import { PatentCard } from "@/components/patent-card";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectModal } from "@/components/project-modal";
@@ -20,6 +21,7 @@ import {
   CpuIcon,
   DownloadIcon,
   ExternalLinkIcon,
+  EyeIcon,
   GraduationCapIcon,
   LayersIcon,
   MailIcon,
@@ -30,11 +32,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
+  const { previewFile, downloadFile } = useFileViewer();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -73,7 +77,7 @@ export default function Page() {
       </div>
 
       {/* ===================== HERO SECTION ===================== */}
-      <section id="hero" className="pt-2 sm:pt-6 scroll-mt-20">
+      <section id="hero" className="pt-0 scroll-mt-12">
         <div className="space-y-6">
           {/* Availability Badge */}
           <BlurFade delay={BLUR_FADE_DELAY}>
@@ -124,11 +128,36 @@ export default function Page() {
               {/* Action Buttons */}
               <BlurFade delay={BLUR_FADE_DELAY * 6}>
                 <div className="flex flex-wrap items-center gap-2.5 pt-3">
-                  <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm">
-                    <a href="/Mohammad_Fayas_Khan_Resume.pdf" target="_blank" rel="noopener noreferrer">
-                      <DownloadIcon className="size-3.5" />
-                      Download Resume
-                    </a>
+                  <Button
+                    size="sm"
+                    className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
+                    onClick={() =>
+                      previewFile({
+                        url: "/Mohammad_Fayas_Khan_Resume.pdf",
+                        title: "Mohammad Fayas Khan Resume",
+                        type: "resume",
+                        badge: "Official Resume (PDF)",
+                        subtitle: "AI Systems and Full-Stack Engineer",
+                      })
+                    }
+                  >
+                    <EyeIcon className="size-3.5" />
+                    Preview Resume
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
+                    onClick={() =>
+                      downloadFile({
+                        url: "/Mohammad_Fayas_Khan_Resume.pdf",
+                        filename: "Mohammad_Fayas_Khan_Resume.pdf",
+                        title: "Mohammad Fayas Khan Resume",
+                      })
+                    }
+                  >
+                    <DownloadIcon className="size-3.5" />
+                    Download
                   </Button>
                   <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
                     <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
@@ -162,16 +191,16 @@ export default function Page() {
             <BlurFade delay={BLUR_FADE_DELAY * 3} className="flex-shrink-0">
               <TiltCard maxTilt={8} scale={1.03} className="w-fit">
                 <div className="relative size-36 sm:size-44 md:size-48 lg:size-52 rounded-3xl border-2 border-border/80 p-2 sm:p-2.5 shadow-xl bg-card">
-                  <Avatar className="size-full rounded-2xl overflow-hidden shadow-inner">
-                    <AvatarImage
+                  <div className="relative size-full rounded-2xl overflow-hidden shadow-inner bg-muted">
+                    <Image
                       alt={DATA.name}
                       src={DATA.avatarUrl}
+                      fill
+                      priority
+                      sizes="(max-width: 640px) 144px, (max-width: 768px) 176px, 208px"
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-2xl"
                     />
-                    <AvatarFallback className="text-2xl font-bold rounded-2xl bg-muted">
-                      {DATA.initials}
-                    </AvatarFallback>
-                  </Avatar>
+                  </div>
                 </div>
               </TiltCard>
             </BlurFade>

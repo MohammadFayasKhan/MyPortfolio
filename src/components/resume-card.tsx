@@ -1,11 +1,11 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ChevronRightIcon, ExternalLinkIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -46,23 +46,27 @@ export const ResumeCard = ({
   const cardContent = (
     <Card className="flex border border-border/70 hover:border-foreground/20 hover:shadow-sm transition-all duration-200 bg-card p-3 sm:p-4 rounded-xl">
       <div className="flex-none">
-        <Avatar
+        <div
           className={cn(
-            "border border-border/50 size-11 sm:size-12 m-auto rounded-xl shadow-xs overflow-hidden flex items-center justify-center shrink-0",
+            "border border-border/50 size-11 sm:size-12 m-auto rounded-xl shadow-xs overflow-hidden flex items-center justify-center shrink-0 relative",
             logoUrl ? "bg-white dark:bg-white" : "bg-muted/60 dark:bg-muted/30"
           )}
         >
           {logoUrl ? (
-            <AvatarImage
+            <Image
               src={logoUrl}
-              alt={altText}
-              className="object-contain p-1 w-full h-full"
+              alt={altText || title}
+              width={44}
+              height={44}
+              priority
+              className="object-contain p-1 size-full"
             />
-          ) : null}
-          <AvatarFallback className="text-xs font-semibold rounded-xl">
-            {icon ? icon : altText ? altText[0] : "•"}
-          </AvatarFallback>
-        </Avatar>
+          ) : (
+            <span className="text-xs font-semibold rounded-xl text-foreground">
+              {icon ? icon : altText ? altText[0] : "•"}
+            </span>
+          )}
+        </div>
       </div>
       <div className="flex-grow ml-3 sm:ml-4 flex-col group">
         <CardHeader className="p-0 space-y-1">

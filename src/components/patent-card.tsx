@@ -13,18 +13,22 @@ import { PatentItem } from "@/data/resume";
 import {
   DownloadIcon,
   ExternalLinkIcon,
+  EyeIcon,
   FileTextIcon,
   ShieldCheckIcon,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { TiltCard } from "@/components/ui/tilt-card";
+import { useFileViewer } from "@/components/file-viewer-context";
 
 interface PatentCardProps {
   patent: PatentItem;
 }
 
 export function PatentCard({ patent }: PatentCardProps) {
+  const { previewFile, downloadFile } = useFileViewer();
+
   return (
     <TiltCard maxTilt={4} scale={1.008}>
       <Card className="flex flex-col justify-between border border-border/80 bg-card hover:border-foreground/30 hover:shadow-lg transition-all duration-300 rounded-2xl h-full p-4 sm:p-5 space-y-3.5">
@@ -73,17 +77,36 @@ export function PatentCard({ patent }: PatentCardProps) {
         </div>
 
         <div className="pt-2 flex flex-wrap gap-2 border-t border-border/40">
-          <Button asChild size="sm" className="h-8 gap-1.5 text-xs">
-            <Link href={patent.pdfUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLinkIcon className="size-3.5" />
-              View Patent Filing (PDF)
-            </Link>
+          <Button
+            size="sm"
+            className="h-8 gap-1.5 text-xs"
+            onClick={() =>
+              previewFile({
+                url: patent.pdfUrl,
+                title: patent.title,
+                type: "patent",
+                badge: patent.type,
+                subtitle: `Applicant: ${patent.applicant}`,
+              })
+            }
+          >
+            <EyeIcon className="size-3.5" />
+            Preview Patent (PDF)
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-8 gap-1.5 text-xs">
-            <a href={patent.pdfUrl} download>
-              <DownloadIcon className="size-3.5" />
-              Download PDF
-            </a>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 gap-1.5 text-xs"
+            onClick={() =>
+              downloadFile({
+                url: patent.pdfUrl,
+                filename: `${patent.title.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`,
+                title: patent.title,
+              })
+            }
+          >
+            <DownloadIcon className="size-3.5" />
+            Download PDF
           </Button>
         </div>
       </Card>

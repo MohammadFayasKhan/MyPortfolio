@@ -6,8 +6,11 @@ import { Separator } from "@/components/ui/separator";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import React from "react";
+import { useFileViewer } from "@/components/file-viewer-context";
 
 export default function Navbar() {
+  const { previewFile } = useFileViewer();
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -82,6 +85,18 @@ export default function Navbar() {
               >
                 <Link
                   href={social.url}
+                  onClick={(e) => {
+                    if (name === "Resume") {
+                      e.preventDefault();
+                      previewFile({
+                        url: social.url,
+                        title: "Mohammad Fayas Khan Resume",
+                        type: "resume",
+                        badge: "Official Resume (PDF)",
+                        subtitle: "AI Systems and Full-Stack Engineer",
+                      });
+                    }
+                  }}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className="group/item relative flex flex-col items-center justify-center h-full w-full py-1 text-muted-foreground hover:text-foreground transition-colors"

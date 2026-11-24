@@ -16,12 +16,14 @@ import {
   ChevronDownIcon,
   DownloadIcon,
   ExternalLinkIcon,
+  EyeIcon,
   FileTextIcon,
   LayersIcon,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { TiltCard } from "@/components/ui/tilt-card";
+import { useFileViewer } from "@/components/file-viewer-context";
 
 interface ResearchCardProps {
   title: string;
@@ -50,6 +52,7 @@ export function ResearchCard({
   contributions,
   className,
 }: ResearchCardProps) {
+  const { previewFile, downloadFile } = useFileViewer();
   const [showAbstract, setShowAbstract] = useState(false);
 
   return (
@@ -149,17 +152,36 @@ export function ResearchCard({
         </div>
 
         <div className="pt-2 flex flex-wrap gap-2 border-t border-border/40">
-          <Button asChild size="sm" className="h-8 gap-1.5 text-xs">
-            <Link href={pdfUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLinkIcon className="size-3.5" />
-              Read Full Paper (PDF)
-            </Link>
+          <Button
+            size="sm"
+            className="h-8 gap-1.5 text-xs"
+            onClick={() =>
+              previewFile({
+                url: pdfUrl,
+                title,
+                type: "research",
+                badge: status,
+                subtitle: `${institution} • ${course || ""}`,
+              })
+            }
+          >
+            <EyeIcon className="size-3.5" />
+            Preview Paper (PDF)
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-8 gap-1.5 text-xs">
-            <a href={pdfUrl} download>
-              <DownloadIcon className="size-3.5" />
-              Download PDF
-            </a>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 gap-1.5 text-xs"
+            onClick={() =>
+              downloadFile({
+                url: pdfUrl,
+                filename: `${title.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`,
+                title,
+              })
+            }
+          >
+            <DownloadIcon className="size-3.5" />
+            Download PDF
           </Button>
         </div>
       </Card>

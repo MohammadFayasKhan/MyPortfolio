@@ -4,17 +4,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Certification } from "@/data/resume";
-import { AwardIcon, ExternalLinkIcon, FileCheckIcon } from "lucide-react";
+import { AwardIcon, ExternalLinkIcon, EyeIcon, FileCheckIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { TiltCard } from "@/components/ui/tilt-card";
+import { useFileViewer } from "@/components/file-viewer-context";
 
 interface CertificationCardProps {
   certification: Certification;
 }
 
 export function CertificationCard({ certification }: CertificationCardProps) {
+  const { previewFile } = useFileViewer();
+
   return (
     <TiltCard maxTilt={5} scale={1.015}>
       <Card className="flex flex-col justify-between h-full rounded-2xl border border-border/80 bg-card p-4 sm:p-5 hover:border-foreground/30 hover:shadow-md transition-all space-y-3">
@@ -80,15 +83,24 @@ export function CertificationCard({ certification }: CertificationCardProps) {
             Verified Credential
           </span>
           {certification.proofUrl ? (
-            <Button asChild variant="ghost" size="sm" className="h-7 px-2 text-xs gap-1 hover:text-primary">
-              <Link
-                href={certification.proofUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>View Proof</span>
-                <ExternalLinkIcon className="size-3 opacity-60" />
-              </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 px-2 text-xs gap-1 hover:text-primary"
+              onClick={() => {
+                if (certification.proofUrl) {
+                  previewFile({
+                    url: certification.proofUrl,
+                    title: certification.title,
+                    type: "certificate",
+                    badge: "Verified Credential",
+                    subtitle: `Issuer: ${certification.issuer}`,
+                  });
+                }
+              }}
+            >
+              <span>View Proof</span>
+              <EyeIcon className="size-3 opacity-60" />
             </Button>
           ) : (
             <span className="text-[10px] text-muted-foreground font-mono">

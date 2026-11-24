@@ -8,7 +8,19 @@
       <stop offset="0%" stop-color="#3f3f46" />
       <stop offset="100%" stop-color="#27272a" />
     </linearGradient>
+    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
   </defs>
   <rect x="24" y="24" width="464" height="464" rx="110" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="8" />
-  <text x="256" y="328" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif" font-size="230" font-weight="800" fill="#fafafa" text-anchor="middle" letter-spacing="-6">FK</text>
+  <rect x="36" y="36" width="440" height="440" rx="98" fill="none" stroke="#27272a" stroke-width="3" opacity="0.6" />
+  
+  <!-- Centered FK Monogram -->
+  <text x="256" y="332" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif" font-size="224" font-weight="800" fill="#fafafa" text-anchor="middle" letter-spacing="-5">FK</text>
+  
+  <!-- Emerald Status Indicator -->
+  <circle cx="390" cy="110" r="22" fill="#10b981" filter="url(#emeraldGlow)" />
+  <circle cx="390" cy="110" r="16" fill="#10b981" stroke="#059669" stroke-width="3" />
+  <circle cx="390" cy="110" r="7" fill="#6ee7b7" />
 </svg>

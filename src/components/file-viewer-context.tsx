@@ -265,12 +265,23 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
                   </div>
 
                   {/* Document Viewport */}
-                  <div className="relative flex-1 w-full bg-muted/20 overflow-hidden">
-                    <iframe
-                      src={`${activePreview.url}#toolbar=1&navpanes=0`}
-                      title={activePreview.title}
-                      className="size-full border-0"
-                    />
+                  <div className="relative flex-1 w-full bg-muted/20 overflow-hidden flex items-center justify-center">
+                    {activePreview.url.match(/\.(jpeg|jpg|png|webp|avif)$/i) ? (
+                      <div className="size-full overflow-auto p-4 flex items-center justify-center bg-black/20">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={activePreview.url}
+                          alt={activePreview.title}
+                          className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
+                        />
+                      </div>
+                    ) : (
+                      <iframe
+                        src={`${activePreview.url}#toolbar=1&navpanes=0`}
+                        title={activePreview.title}
+                        className="size-full border-0"
+                      />
+                    )}
                   </div>
                 </motion.div>
               </div>

@@ -756,7 +756,7 @@ export const DATA = {
       issuer: "NPTEL and IIT Kharagpur (Ministry of Education)",
       date: "Nov 2025",
       credentialId: "NPTEL25CS108S44620023",
-      proofUrl: "https://www.linkedin.com/in/mohammadfayaskhan/",
+      proofUrl: "/certificates/NPTEL_Industry_4_0_IIoT_Certificate.pdf",
       description:
         "Earned Elite + Silver medal certification with a consolidated score of 76% (Online Assignments: 24.35/25, Proctored Exam: 51/75). Demonstrated mastery of cyber-physical systems, smart sensor telemetry, industrial communication architectures, and cloud-edge integration.",
       skills: ["Industrial IoT", "Industry 4.0", "Cyber-Physical Systems", "Sensors and Telemetry"],
@@ -773,14 +773,166 @@ export const DATA = {
       skills: ["Oracle Cloud Infrastructure", "Generative AI", "Computer Vision", "Natural Language Processing"],
     },
     {
-      title: "Oracle Certified Foundation Associate (OCI Foundations)",
+      title: "Agentic AI Certified Foundations Associate",
+      issuer: "Oracle University",
+      date: "Sep 2026",
+      credentialId: "102465480CI25AGTAI",
+      proofUrl: "/certificates/OracleAgenticAICertification.pdf",
+      badgeUrl: "/certificates/OracleAgenticAIBadge.jpg",
+      description:
+        "Demonstrated proficiency in autonomous AI agents, tool invocation protocols, agentic reasoning loops, memory systems, and deploying enterprise multi-agent architectures.",
+      skills: ["Agentic AI", "Autonomous Agents", "Reasoning Loops", "Tool Calling"],
+    },
+    {
+      title: "Oracle Cloud Infrastructure 2025 Certified Foundations Associate",
       issuer: "Oracle University",
       date: "Oct 2025",
       credentialId: "102465480CI25FNDCFA",
-      proofUrl: "/certificates/OracleAgenticAICertification.pdf",
+      proofUrl: "/certificates/Oracle_OCI_2025_Foundations_Associate.pdf",
       description:
         "Demonstrated a comprehensive understanding of core cloud computing architecture, OCI services, network virtualization, cloud security posture management, and enterprise database infrastructure.",
       skills: ["Cloud Architecture", "OCI Core Services", "Cloud Security", "Identity and Access Management"],
+    },
+    {
+      title: "Oracle Guided Learning Project Management Certified Foundations Associate",
+      issuer: "Oracle University",
+      date: "Oct 2026",
+      credentialId: "102465480OGL26PMFA",
+      proofUrl: "/certificates/OracleProjectManagemetCertification.pdf",
+      description:
+        "Certified in cloud project planning, milestone delivery governance, change management, and enterprise guided learning deployment across distributed software teams.",
+      skills: ["Project Governance", "Milestone Tracking", "Resource Planning", "Guided Learning"],
+    },
+    {
+      title: "Foundations of Project Management",
+      issuer: "Google (via Coursera)",
+      date: "Oct 2026",
+      credentialId: "883Z0CRB7VK9",
+      proofUrl: "/certificates/Google_Project_Management_Coursera.pdf",
+      description:
+        "Validated competencies in project life cycles, agile methodologies, risk mitigation, stakeholder management, and project execution frameworks authorized by Google.",
+      skills: ["Project Management", "Agile Execution", "Risk Mitigation", "Stakeholder Communication"],
+    },
+    {
+      title: "Chatbot and Smart Assistant Development (Course Excellence)",
+      issuer: "NASSCOM Foundation (thingQbator)",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Chatbot_Smart_Assistant_Course_Excellence.pdf",
+      description:
+        "Awarded Certificate of Course Excellence for conversational AI architecture, intent classification, dialog state flow design, and deploying intelligent assistant engines under the thingQbator initiative.",
+      skills: ["Conversational AI", "Dialog Systems", "Natural Language Processing", "Chatbots"],
+    },
+    {
+      title: "Introduction to Data Science",
+      issuer: "Infosys Springboard",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_DataScience.pdf",
+      description:
+        "Mastered fundamental data science pipelines, statistical analysis, exploratory data transformations, feature engineering, and predictive modeling.",
+      skills: ["Data Science", "Python", "Exploratory Data Analysis", "Statistical Modeling"],
+    },
+    {
+      title: "Introduction to Natural Language Processing",
+      issuer: "Infosys Springboard",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_Natural_Langugae_Processing.pdf",
+      description:
+        "Covered tokenization, lemmatization, semantic embeddings, sentiment classification, language modeling, and modern neural NLP pipelines.",
+      skills: ["Natural Language Processing", "Word Embeddings", "Text Classification", "Neural Networks"],
+    },
+    {
+      title: "Database Management System (Parts 1 & 2)",
+      issuer: "Infosys Springboard",
+      date: "Jul 2026",
+      proofUrl: "/certificates/InfosysDbmsPart1.pdf",
+      description:
+        "Completed in-depth proctored training in relational database architecture, ER modeling, SQL querying, transaction ACID properties, indexing, and normalization.",
+      skills: ["DBMS", "SQL", "Relational Modeling", "ACID Transactions", "Database Indexing"],
+    },
+    {
+      title: "Agile Scrum Proctored Certification",
+      issuer: "Infosys Springboard",
+      date: "Oct 2026",
+      proofUrl: "/certificates/Infosys_Springboard_Agile_Scrum_Certificate.pdf",
+      description:
+        "Successfully cleared proctored examination evaluating practical sprint ceremonies, backlog refinement, sprint velocity estimation, and cross-functional team coordination.",
+      skills: ["Agile Scrum", "Sprint Planning", "Backlog Refinement", "Team Retrospectives"],
+    },
+    {
+      title: "Agile Explorer",
+      issuer: "IBM SkillsBuild",
+      date: "Sep 2026",
+      proofUrl: "/certificates/IBMAgileCertification.pdf",
+      description:
+        "Validated mastery of agile values, user story estimation, iterative release cycles, and continuous collaboration certified by IBM SkillsBuild and Credly.",
+      skills: ["Agile Methodology", "Iterative Development", "User Stories", "Kanban"],
+    },
+    {
+      title: "Project Management Fundamentals",
+      issuer: "IBM SkillsBuild",
+      date: "Sep 2026",
+      proofUrl: "/certificates/IBMProjectManagementFundamentalsCertification.pdf",
+      description:
+        "Mastered baseline scheduling, work breakdown structures (WBS), risk management matrices, and scope verification under IBM professional standards.",
+      skills: ["Work Breakdown Structure", "Project Scheduling", "Risk Mitigation", "Scope Management"],
+    },
+    {
+      title: "Lifelong Professional Skills",
+      issuer: "IBM SkillsBuild",
+      date: "Sep 2026",
+      proofUrl: "/certificates/LifelongProfessionalSkills_Badge20260930-21-sftb18.pdf",
+      badgeUrl: "/certificates/lifelong-professional-skills.png",
+      description:
+        "Certified by IBM SkillsBuild for critical workplace problem-solving, structured analytical thinking, professional collaboration, and continuous technical growth.",
+      skills: ["Critical Thinking", "Problem Solving", "Professional Communication", "Team Collaboration"],
+    },
+    {
+      title: "Agile Project Management",
+      issuer: "HP LIFE",
+      date: "Aug 2026",
+      proofUrl: "/certificates/HP_LIFE_Agile_Project_Management.pdf",
+      description:
+        "Completed HP LIFE international training covering customer-centric sprint prioritization, iterative MVP releases, and agile execution for high-velocity teams.",
+      skills: ["Agile Project Management", "MVP Iterations", "Customer Feedback", "Sprint Prioritization"],
+    },
+    {
+      title: "Linux Foundation LFS101: Introduction to Linux",
+      issuer: "The Linux Foundation",
+      date: "Oct 2026",
+      credentialId: "LF-iiiay3h1ae",
+      proofUrl: "/certificates/LinuxFoundationsIntroductionToLinuxCertification.pdf",
+      badgeUrl: "/certificates/Lfs101IntroductionToLinuxBadge.png",
+      description:
+        "Validated core competencies in system administration, Bash shell scripting, filesystem hierarchy, POSIX utilities, user access permissions, and process management.",
+      skills: ["Linux", "Bash Scripting", "System Administration", "POSIX Tools"],
+    },
+    {
+      title: "Cisco Operating Systems Basics",
+      issuer: "Cisco Networking Academy",
+      date: "Oct 2026",
+      proofUrl: "/certificates/CiscoOperatingSystemsCertification.pdf",
+      badgeUrl: "/certificates/CiscoOperatingSystems-Badge.png",
+      description:
+        "Mastered operating system internals including process scheduling, memory virtualization, multi-user privilege levels, and command-line system diagnostics.",
+      skills: ["Operating Systems", "Process Management", "Memory Virtualization", "System Security"],
+    },
+    {
+      title: "Model Context Protocol (MCP) Foundation",
+      issuer: "Anthropic Claude Academy",
+      date: "Oct 2026",
+      proofUrl: "/certificates/claude-academy-badge-introduction-to-model-context-protocol.pdf",
+      description:
+        "Mastered the open standard Model Context Protocol, architecting secure agentic tools, context servers, and structured model-to-system integrations.",
+      skills: ["Agentic AI", "Model Context Protocol", "Tool Calling", "System Integrations"],
+    },
+    {
+      title: "Claude 101 Certification",
+      issuer: "Anthropic Claude Academy",
+      date: "Oct 2026",
+      proofUrl: "/certificates/Claude_101_Claude_Academy_Badge.pdf",
+      description:
+        "Certified in LLM prompt engineering, multi-turn system orchestration, context window management, and structured generation.",
+      skills: ["Large Language Models", "Prompt Engineering", "Context Management", "AI Safety"],
     },
     {
       title: "n8n Academy: Essentials: Your First Workflows",
@@ -793,24 +945,6 @@ export const DATA = {
       skills: ["Workflow Automation", "API Integration", "JSON Processing", "Data Pipelines"],
     },
     {
-      title: "Machine Learning and Image Processing",
-      issuer: "NASSCOM Foundation (thingQbator)",
-      date: "Dec 2025",
-      proofUrl: "https://thingqbator.nasscomfoundation.org/certificate/6mnL114ovIBFFS3i",
-      description:
-        "Completed hands-on training and evaluation in computer vision, image processing transformations, spatial feature extraction, and supervised machine learning model pipelines.",
-      skills: ["Machine Learning", "Image Processing", "Computer Vision", "Data Modeling"],
-    },
-    {
-      title: "Chatbot and Smart Assistant Development",
-      issuer: "NASSCOM Foundation (thingQbator)",
-      date: "Dec 2025",
-      proofUrl: "https://thingqbator.nasscomfoundation.org/certificate/wGwN3XvNQP1EiO43",
-      description:
-        "Gained practical expertise in conversational AI architecture, intent classification, dialog state flow design, and deploying intelligent assistant engines under the thingQbator initiative.",
-      skills: ["Conversational AI", "Dialog Systems", "Natural Language Processing", "Chatbots"],
-    },
-    {
       title: "Google Analytics Certification",
       issuer: "Google Skillshop",
       date: "Aug 2025",
@@ -818,35 +952,6 @@ export const DATA = {
       description:
         "Validated ability to configure web analytics, instrument event telemetry, evaluate behavioral session funnels, and extract actionable data-driven insights to optimize application performance.",
       skills: ["Data Analytics", "Web Analytics", "Telemetry", "Event Tracking"],
-    },
-    {
-      title: "Linux Foundation LFS101: Introduction to Linux",
-      issuer: "The Linux Foundation",
-      date: "2025",
-      proofUrl: "/certificates/LinuxFoundationsIntroductionToLinuxCertification.pdf",
-      badgeUrl: "/certificates/Lfs101IntroductionToLinuxBadge.png",
-      description:
-        "Validated core competencies in system administration, Bash shell scripting, filesystem hierarchy, POSIX utilities, user access permissions, and process management.",
-      skills: ["Linux", "Bash Scripting", "System Administration", "POSIX Tools"],
-    },
-    {
-      title: "Cisco Operating Systems Basics",
-      issuer: "Cisco Networking Academy",
-      date: "2025",
-      proofUrl: "/certificates/CiscoOperatingSystemsCertification.pdf",
-      badgeUrl: "/certificates/CiscoOperatingSystems-Badge.png",
-      description:
-        "Mastered operating system internals including process scheduling, memory virtualization, multi-user privilege levels, and command-line system diagnostics.",
-      skills: ["Operating Systems", "Process Management", "Memory Virtualization", "System Security"],
-    },
-    {
-      title: "Model Context Protocol (MCP) Foundation",
-      issuer: "Anthropic Claude Academy",
-      date: "2026",
-      proofUrl: "/certificates/claude-academy-badge-introduction-to-model-context-protocol.pdf",
-      description:
-        "Mastered the open standard Model Context Protocol, architecting secure agentic tools, context servers, and structured model-to-system integrations.",
-      skills: ["Agentic AI", "Model Context Protocol", "Tool Calling", "System Integrations"],
     },
     {
       title: "Computer Programming Intensive (72 Hours)",
@@ -919,7 +1024,7 @@ export const DATA = {
       badges: ["Credential ID: 426180", "CGPA 9.66 / 10", "Academic Excellence"],
       description:
         "Recognized on the university-wide Honor Roll for sustained academic excellence, maintaining an overall 9.66/10 CGPA across four semesters of intensive Computer Science and Engineering coursework.",
-      proofUrl: "/certificates/AcademicTranscript.pdf",
+      proofUrl: "/certificates/University_Honor_Roll_Certificate.jpeg",
     },
     {
       title: "LPU GearUp Season 5 Hardware Finalist",

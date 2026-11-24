@@ -2,9 +2,10 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
+import { useFileViewer } from "@/components/file-viewer-context";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ChevronRightIcon, ExternalLinkIcon } from "lucide-react";
+import { ChevronRightIcon, ExternalLinkIcon, EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -34,6 +35,7 @@ export const ResumeCard = ({
   period,
   description,
 }: ResumeCardProps) => {
+  const { previewFile } = useFileViewer();
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const toggleExpand = (e: React.MouseEvent) => {
@@ -108,16 +110,36 @@ export const ResumeCard = ({
 
         {proofUrl && (
           <div className="mt-1">
-            <Link
-              href={proofUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
-            >
-              <span>View Verification Proof</span>
-              <ExternalLinkIcon className="size-2.5" />
-            </Link>
+            {proofUrl.startsWith("/") ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  previewFile({
+                    url: proofUrl,
+                    title,
+                    type: "certificate",
+                    badge: "Verified Proof",
+                    subtitle: subtitle || "Official Document",
+                  });
+                }}
+                className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline cursor-pointer"
+              >
+                <span>View Verification Proof</span>
+                <EyeIcon className="size-2.5 opacity-70" />
+              </button>
+            ) : (
+              <Link
+                href={proofUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+              >
+                <span>View Verification Proof</span>
+                <ExternalLinkIcon className="size-2.5" />
+              </Link>
+            )}
           </div>
         )}
 

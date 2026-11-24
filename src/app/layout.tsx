@@ -7,6 +7,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -101,6 +102,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <head>
+        <Script src="/gsap/gsap.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollTrigger.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollToPlugin.min.js" strategy="beforeInteractive" />
+        <Script src="/gsap/ScrollSmoother.min.js" strategy="beforeInteractive" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background text-foreground font-sans antialiased",

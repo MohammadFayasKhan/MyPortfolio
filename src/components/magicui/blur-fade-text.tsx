@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, Variants } from "framer-motion";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 interface BlurFadeTextProps {
   text: string;
@@ -30,11 +30,17 @@ const BlurFadeText = ({
 }: BlurFadeTextProps) => {
   const words = useMemo(() => text.split(" "), [text]);
   const activeVariants = variant || defaultLinearVariants;
+  const [animationDone, setAnimationDone] = useState(false);
+
+  if (animationDone) {
+    return <span className={cn("inline-flex flex-wrap gap-x-2 gap-y-1", className)}>{text}</span>;
+  }
 
   return (
     <motion.span
       initial="hidden"
       animate="visible"
+      onAnimationComplete={() => setAnimationDone(true)}
       transition={{ staggerChildren: wordDelay, delayChildren: delay }}
       className={cn("inline-flex flex-wrap gap-x-2 gap-y-1", className)}
     >

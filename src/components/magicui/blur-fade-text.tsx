@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +26,12 @@ const BlurFadeText = ({
   duration = 0.8,
   delay = 0,
 }: BlurFadeTextProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const words = text.split(" ");
   const activeVariants = variant || variants;
   const activeTransition = { duration, ease: [0.25, 0.1, 0.25, 1] };
@@ -33,7 +39,7 @@ const BlurFadeText = ({
   return (
     <motion.div
       initial="hidden"
-      animate="visible"
+      animate={mounted ? "visible" : "hidden"}
       transition={{ staggerChildren: 0.04, delayChildren: delay }}
       className="inline-flex flex-wrap items-baseline gap-x-2"
     >

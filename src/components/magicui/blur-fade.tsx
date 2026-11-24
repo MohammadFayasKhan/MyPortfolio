@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, UseInViewOptions, Variants } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface BlurFadeProps {
   children: React.ReactNode;
@@ -27,7 +27,13 @@ const BlurFade = ({
   blur = "10px",
 }: BlurFadeProps) => {
   const ref = useRef(null);
+  const [mounted, setMounted] = useState(false);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isInView = !inView || inViewResult;
 
   const defaultVariants: Variants = {
@@ -49,7 +55,7 @@ const BlurFade = ({
     <motion.div
       ref={ref}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      animate={mounted && isInView ? "visible" : "hidden"}
       variants={combinedVariants}
       transition={{
         delay: Math.min(delay, 0.2),

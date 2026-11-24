@@ -75,24 +75,12 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     if (isOpen) {
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
-      const smoother = (window as any).ScrollSmoother?.get?.();
-      if (smoother) {
-        smoother.paused(true);
-      }
     } else {
       document.body.style.overflow = "unset";
-      const smoother = (window as any).ScrollSmoother?.get?.();
-      if (smoother) {
-        smoother.paused(false);
-      }
     }
     return () => {
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
-      const smoother = (window as any).ScrollSmoother?.get?.();
-      if (smoother) {
-        smoother.paused(false);
-      }
     };
   }, [isOpen, onClose]);
 

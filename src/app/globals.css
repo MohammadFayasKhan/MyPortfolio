@@ -70,7 +70,7 @@
     * {
       @apply border-border;
     }
-    html:not(.has-smooth-scroller) {
+    html {
       scroll-behavior: smooth;
     }
     body {
@@ -146,36 +146,11 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
 
-/* Smooth Scroller GSAP Wrapper styles */
-html.has-smooth-scroller {
-  overflow: hidden;
-  height: 100%;
-}
-
-html.has-smooth-scroller body {
-  overflow: hidden;
-  height: 100%;
-  overscroll-behavior: none;
-}
-
-html.has-smooth-scroller #smooth-wrapper {
-  overflow: hidden;
-  position: fixed;
-  height: 100%;
+/* Smooth Content Container */
+#smooth-wrapper,
+#smooth-content {
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-}
-
-html.has-smooth-scroller #smooth-content {
   overflow: visible;
-  width: 100%;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 /* Hide scrollbar utility */

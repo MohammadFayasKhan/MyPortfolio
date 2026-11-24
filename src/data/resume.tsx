@@ -755,7 +755,7 @@ export const DATA = {
     {
       title: "Introduction to Industry 4.0 and Industrial Internet of Things (IIoT)",
       issuer: "NPTEL and IIT Kharagpur (Ministry of Education)",
-      date: "Nov 2025",
+      date: "Oct 2026",
       credentialId: "NPTEL25CS108S44620023",
       proofUrl: "/certificates/NPTEL_Industry_4_0_IIoT_Certificate.pdf",
       pinned: true,
@@ -798,7 +798,7 @@ export const DATA = {
     {
       title: "Data Structures and Algorithms (DSA - CSE205)",
       issuer: "Lovely Professional University and NeoColab",
-      date: "2025",
+      date: "Dec 2025",
       proofUrl: "/certificates/Data_Structures_Algorithms_CSE205.pdf",
       description:
         "Validated proficiency in asymptotic complexity analysis, linear and non-linear data structures, trees, graphs, sorting, searching, and algorithmic problem-solving.",
@@ -807,7 +807,7 @@ export const DATA = {
     {
       title: "Object Oriented Programming (OOPS - CSE202)",
       issuer: "Lovely Professional University and NeoColab",
-      date: "2025",
+      date: "Dec 2025",
       proofUrl: "/certificates/Object_Oriented_Programming_CSE202.pdf",
       description:
         "Demonstrated practical mastery of object-oriented architecture, class encapsulation, inheritance polymorphism, virtual methods, abstraction, and memory safety.",
@@ -816,7 +816,7 @@ export const DATA = {
     {
       title: "Programming in Java (CSE310)",
       issuer: "Lovely Professional University and NeoColab",
-      date: "2026",
+      date: "Jun 2026",
       proofUrl: "/certificates/Programming_in_Java_CSE310.pdf",
       description:
         "Mastered core Java fundamentals, object-oriented design, multithreading concurrency, JVM memory model, Java Collections framework, and robust backend exception handling.",
@@ -978,7 +978,7 @@ export const DATA = {
     {
       title: "Computer Programming Intensive (72 Hours)",
       issuer: "Lovely Professional University and iamneo",
-      date: "May 2025",
+      date: "Jul 2025",
       credentialId: "21A60BJ15K9CL25M9",
       proofUrl: "/certificates/SummerTrainingCertificate12413692.PDF",
       description:

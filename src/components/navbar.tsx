@@ -93,7 +93,7 @@ export default function Navbar() {
                         title: "Mohammad Fayas Khan Resume",
                         type: "resume",
                         badge: "Official Resume (PDF)",
-                        subtitle: "AI Systems and Full-Stack Engineer",
+                        subtitle: "AI and Software Engineer (SDE)",
                       });
                     }
                   }}

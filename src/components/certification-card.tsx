@@ -29,9 +29,16 @@ export function CertificationCard({ certification }: CertificationCardProps) {
             >
               {certification.issuer}
             </Badge>
-            <time className="font-mono text-[11px] text-muted-foreground">
-              {certification.date}
-            </time>
+            <div className="flex items-center gap-1.5">
+              {certification.pinned && (
+                <span className="inline-flex items-center gap-0.5 rounded-md bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                  Featured
+                </span>
+              )}
+              <time className="font-mono text-[11px] text-muted-foreground">
+                {certification.date}
+              </time>
+            </div>
           </div>
 
           <div className="flex items-start gap-3 pt-1">

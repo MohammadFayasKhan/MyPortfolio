@@ -18,6 +18,8 @@ import {
   AwardIcon,
   BookOpenIcon,
   BriefcaseIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   CpuIcon,
   DownloadIcon,
   ExternalLinkIcon,
@@ -41,6 +43,7 @@ export default function Page() {
   const { previewFile, downloadFile } = useFileViewer();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAllCertificates, setShowAllCertificates] = useState(false);
 
   const handleOpenProject = (project: Project) => {
     setSelectedProject(project);
@@ -383,13 +386,16 @@ export default function Page() {
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Official credentials in Agentic AI, Cloud Infrastructure, Operating Systems, and Agile methodologies with verified attachments.
+              Official credentials in Agentic AI, Cloud Infrastructure, Operating Systems, and Core CS with verified attachments.
             </p>
           </div>
         </BlurFade>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-          {DATA.certifications.map((cert, id) => (
+          {(showAllCertificates
+            ? DATA.certifications
+            : DATA.certifications.filter((c) => c.pinned)
+          ).map((cert, id) => (
             <BlurFade
               key={cert.title}
               delay={0.03 + (id % 2) * 0.03}
@@ -398,6 +404,29 @@ export default function Page() {
             </BlurFade>
           ))}
         </div>
+
+        {DATA.certifications.length > 4 && (
+          <div className="flex justify-center pt-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllCertificates(!showAllCertificates)}
+              className="h-9 px-4 gap-2 text-xs font-medium rounded-xl hover:bg-muted transition-all shadow-xs"
+            >
+              {showAllCertificates ? (
+                <>
+                  <span>Show Featured Only</span>
+                  <ChevronUpIcon className="size-3.5" />
+                </>
+              ) : (
+                <>
+                  <span>View All Certifications ({DATA.certifications.length - 4} More)</span>
+                  <ChevronDownIcon className="size-3.5" />
+                </>
+              )}
+            </Button>
+          </div>
+        )}
       </section>
 
       {/* ===================== ACHIEVEMENTS & COMPETITIONS ===================== */}

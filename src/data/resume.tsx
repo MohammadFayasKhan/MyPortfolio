@@ -69,6 +69,7 @@ export interface Certification {
   badgeUrl?: string;
   description?: string;
   skills?: readonly string[];
+  pinned?: boolean;
 }
 
 export interface ResearchPaper {
@@ -757,9 +758,114 @@ export const DATA = {
       date: "Nov 2025",
       credentialId: "NPTEL25CS108S44620023",
       proofUrl: "/certificates/NPTEL_Industry_4_0_IIoT_Certificate.pdf",
+      pinned: true,
       description:
         "Earned Elite + Silver medal certification with a consolidated score of 76% (Online Assignments: 24.35/25, Proctored Exam: 51/75). Demonstrated mastery of cyber-physical systems, smart sensor telemetry, industrial communication architectures, and cloud-edge integration.",
       skills: ["Industrial IoT", "Industry 4.0", "Cyber-Physical Systems", "Sensors and Telemetry"],
+    },
+    {
+      title: "Agentic AI Certified Foundations Associate",
+      issuer: "Oracle University",
+      date: "Sep 2026",
+      credentialId: "102465480CI25AGTAI",
+      proofUrl: "/certificates/OracleAgenticAICertification.pdf",
+      badgeUrl: "/certificates/OracleAgenticAIBadge.jpg",
+      pinned: true,
+      description:
+        "Demonstrated proficiency in autonomous AI agents, tool invocation protocols, agentic reasoning loops, memory systems, and deploying enterprise multi-agent architectures.",
+      skills: ["Agentic AI", "Autonomous Agents", "Reasoning Loops", "Tool Calling"],
+    },
+    {
+      title: "Chatbot and Smart Assistant Development (Course Excellence)",
+      issuer: "NASSCOM Foundation (thingQbator)",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Chatbot_Smart_Assistant_Course_Excellence.pdf",
+      pinned: true,
+      description:
+        "Awarded Certificate of Course Excellence for conversational AI architecture, intent classification, dialog state flow design, and deploying intelligent assistant engines under the thingQbator initiative.",
+      skills: ["Conversational AI", "Dialog Systems", "Natural Language Processing", "Chatbots"],
+    },
+    {
+      title: "Model Context Protocol (MCP) Foundation",
+      issuer: "Anthropic Claude Academy",
+      date: "Oct 2026",
+      proofUrl: "/certificates/claude-academy-badge-introduction-to-model-context-protocol.pdf",
+      pinned: true,
+      description:
+        "Mastered the open standard Model Context Protocol, architecting secure agentic tools, context servers, and structured model-to-system integrations.",
+      skills: ["Agentic AI", "Model Context Protocol", "Tool Calling", "System Integrations"],
+    },
+    {
+      title: "Data Structures and Algorithms (DSA - CSE205)",
+      issuer: "Lovely Professional University and NeoColab",
+      date: "2025",
+      proofUrl: "/certificates/Data_Structures_Algorithms_CSE205.pdf",
+      description:
+        "Validated proficiency in asymptotic complexity analysis, linear and non-linear data structures, trees, graphs, sorting, searching, and algorithmic problem-solving.",
+      skills: ["Data Structures", "Algorithms", "Graph Theory", "Dynamic Programming", "Complexity Analysis"],
+    },
+    {
+      title: "Object Oriented Programming (OOPS - CSE202)",
+      issuer: "Lovely Professional University and NeoColab",
+      date: "2025",
+      proofUrl: "/certificates/Object_Oriented_Programming_CSE202.pdf",
+      description:
+        "Demonstrated practical mastery of object-oriented architecture, class encapsulation, inheritance polymorphism, virtual methods, abstraction, and memory safety.",
+      skills: ["OOP", "C++", "Polymorphism", "Encapsulation", "Software Architecture"],
+    },
+    {
+      title: "Programming in Java (CSE310)",
+      issuer: "Lovely Professional University and NeoColab",
+      date: "2026",
+      proofUrl: "/certificates/Programming_in_Java_CSE310.pdf",
+      description:
+        "Mastered core Java fundamentals, object-oriented design, multithreading concurrency, JVM memory model, Java Collections framework, and robust backend exception handling.",
+      skills: ["Java", "Multithreading", "JVM Internals", "Collections Framework", "Concurrency"],
+    },
+    {
+      title: "Claude 101 Certification",
+      issuer: "Anthropic Claude Academy",
+      date: "Oct 2026",
+      proofUrl: "/certificates/Claude_101_Anthropic_Certificate.pdf",
+      description:
+        "Certified in LLM prompt engineering, multi-turn system orchestration, context window management, and structured generation.",
+      skills: ["Large Language Models", "Prompt Engineering", "Context Management", "AI Safety"],
+    },
+    {
+      title: "Database Management System Part 1",
+      issuer: "Infosys Springboard",
+      date: "Jul 2026",
+      proofUrl: "/certificates/InfosysDbmsPart1.pdf",
+      description:
+        "Mastered relational data modeling, entity-relationship diagrams, schema normalization, and SQL declarative querying.",
+      skills: ["DBMS", "SQL", "Relational Modeling", "Schema Normalization"],
+    },
+    {
+      title: "Database Management System Part 2",
+      issuer: "Infosys Springboard",
+      date: "Jul 2026",
+      proofUrl: "/certificates/InfosysDbmsPart2.pdf",
+      description:
+        "Advanced database concepts including transaction ACID guarantees, concurrency control, B-tree indexing strategies, and stored procedures.",
+      skills: ["Transaction Management", "ACID", "Database Indexing", "Concurrency Control"],
+    },
+    {
+      title: "Introduction to Data Science",
+      issuer: "Infosys Springboard",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_DataScience.pdf",
+      description:
+        "Mastered fundamental data science pipelines, statistical analysis, exploratory data transformations, feature engineering, and predictive modeling.",
+      skills: ["Data Science", "Python", "Exploratory Data Analysis", "Statistical Modeling"],
+    },
+    {
+      title: "Introduction to Natural Language Processing",
+      issuer: "Infosys Springboard",
+      date: "Dec 2025",
+      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_Natural_Langugae_Processing.pdf",
+      description:
+        "Covered tokenization, lemmatization, semantic embeddings, sentiment classification, language modeling, and modern neural NLP pipelines.",
+      skills: ["Natural Language Processing", "Word Embeddings", "Text Classification", "Neural Networks"],
     },
     {
       title: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
@@ -771,17 +877,6 @@ export const DATA = {
       description:
         "Validated foundational knowledge of machine learning, deep learning, and hands-on proficiency with Oracle Cloud Infrastructure AI services across Language, Vision, Speech, Document Understanding, and Generative AI workflows.",
       skills: ["Oracle Cloud Infrastructure", "Generative AI", "Computer Vision", "Natural Language Processing"],
-    },
-    {
-      title: "Agentic AI Certified Foundations Associate",
-      issuer: "Oracle University",
-      date: "Sep 2026",
-      credentialId: "102465480CI25AGTAI",
-      proofUrl: "/certificates/OracleAgenticAICertification.pdf",
-      badgeUrl: "/certificates/OracleAgenticAIBadge.jpg",
-      description:
-        "Demonstrated proficiency in autonomous AI agents, tool invocation protocols, agentic reasoning loops, memory systems, and deploying enterprise multi-agent architectures.",
-      skills: ["Agentic AI", "Autonomous Agents", "Reasoning Loops", "Tool Calling"],
     },
     {
       title: "Oracle Cloud Infrastructure 2025 Certified Foundations Associate",
@@ -812,42 +907,6 @@ export const DATA = {
       description:
         "Validated competencies in project life cycles, agile methodologies, risk mitigation, stakeholder management, and project execution frameworks authorized by Google.",
       skills: ["Project Management", "Agile Execution", "Risk Mitigation", "Stakeholder Communication"],
-    },
-    {
-      title: "Chatbot and Smart Assistant Development (Course Excellence)",
-      issuer: "NASSCOM Foundation (thingQbator)",
-      date: "Dec 2025",
-      proofUrl: "/certificates/Chatbot_Smart_Assistant_Course_Excellence.pdf",
-      description:
-        "Awarded Certificate of Course Excellence for conversational AI architecture, intent classification, dialog state flow design, and deploying intelligent assistant engines under the thingQbator initiative.",
-      skills: ["Conversational AI", "Dialog Systems", "Natural Language Processing", "Chatbots"],
-    },
-    {
-      title: "Introduction to Data Science",
-      issuer: "Infosys Springboard",
-      date: "Dec 2025",
-      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_DataScience.pdf",
-      description:
-        "Mastered fundamental data science pipelines, statistical analysis, exploratory data transformations, feature engineering, and predictive modeling.",
-      skills: ["Data Science", "Python", "Exploratory Data Analysis", "Statistical Modeling"],
-    },
-    {
-      title: "Introduction to Natural Language Processing",
-      issuer: "Infosys Springboard",
-      date: "Dec 2025",
-      proofUrl: "/certificates/Infosys_Springboard_Introduction_To_Natural_Langugae_Processing.pdf",
-      description:
-        "Covered tokenization, lemmatization, semantic embeddings, sentiment classification, language modeling, and modern neural NLP pipelines.",
-      skills: ["Natural Language Processing", "Word Embeddings", "Text Classification", "Neural Networks"],
-    },
-    {
-      title: "Database Management System (Parts 1 & 2)",
-      issuer: "Infosys Springboard",
-      date: "Jul 2026",
-      proofUrl: "/certificates/InfosysDbmsPart1.pdf",
-      description:
-        "Completed in-depth proctored training in relational database architecture, ER modeling, SQL querying, transaction ACID properties, indexing, and normalization.",
-      skills: ["DBMS", "SQL", "Relational Modeling", "ACID Transactions", "Database Indexing"],
     },
     {
       title: "Agile Scrum Proctored Certification",
@@ -915,43 +974,6 @@ export const DATA = {
       description:
         "Mastered operating system internals including process scheduling, memory virtualization, multi-user privilege levels, and command-line system diagnostics.",
       skills: ["Operating Systems", "Process Management", "Memory Virtualization", "System Security"],
-    },
-    {
-      title: "Model Context Protocol (MCP) Foundation",
-      issuer: "Anthropic Claude Academy",
-      date: "Oct 2026",
-      proofUrl: "/certificates/claude-academy-badge-introduction-to-model-context-protocol.pdf",
-      description:
-        "Mastered the open standard Model Context Protocol, architecting secure agentic tools, context servers, and structured model-to-system integrations.",
-      skills: ["Agentic AI", "Model Context Protocol", "Tool Calling", "System Integrations"],
-    },
-    {
-      title: "Claude 101 Certification",
-      issuer: "Anthropic Claude Academy",
-      date: "Oct 2026",
-      proofUrl: "/certificates/Claude_101_Claude_Academy_Badge.pdf",
-      description:
-        "Certified in LLM prompt engineering, multi-turn system orchestration, context window management, and structured generation.",
-      skills: ["Large Language Models", "Prompt Engineering", "Context Management", "AI Safety"],
-    },
-    {
-      title: "n8n Academy: Essentials: Your First Workflows",
-      issuer: "n8n",
-      date: "Jun 2026",
-      credentialId: "72ca01d4-9b17-4c6e-973b-64ade20c8d66",
-      proofUrl: "https://badges.n8n.io/72ca01d4-9b17-4c6e-973b-64ade20c8d66",
-      description:
-        "Engineered and deployed production workflow automations on n8n. Covered data transformations, HTTP API integrations, binary file processing, JSON parsing, and multi-branch data pipelines.",
-      skills: ["Workflow Automation", "API Integration", "JSON Processing", "Data Pipelines"],
-    },
-    {
-      title: "Google Analytics Certification",
-      issuer: "Google Skillshop",
-      date: "Aug 2025",
-      proofUrl: "https://skillshop.credential.net/77bd545c-7e7f-48f4-bfba-d5bb3c7f8fe2",
-      description:
-        "Validated ability to configure web analytics, instrument event telemetry, evaluate behavioral session funnels, and extract actionable data-driven insights to optimize application performance.",
-      skills: ["Data Analytics", "Web Analytics", "Telemetry", "Event Tracking"],
     },
     {
       title: "Computer Programming Intensive (72 Hours)",

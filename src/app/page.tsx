@@ -35,7 +35,7 @@ import {
 import Link from "next/link";
 import Markdown from "react-markdown";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -66,6 +66,32 @@ export default function Page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const [isDownloadMenuOpen, setIsDownloadMenuOpen] = useState(false);
+  const [menuAlignment, setMenuAlignment] = useState<"left" | "right">("left");
+  const downloadBtnRef = useRef<HTMLDivElement>(null);
+
+  const toggleDownloadMenu = () => {
+    if (!isDownloadMenuOpen && downloadBtnRef.current && typeof window !== "undefined") {
+      const rect = downloadBtnRef.current.getBoundingClientRect();
+      const dropdownWidth = 270;
+      const padding = 16;
+      setMenuAlignment(rect.left + dropdownWidth > window.innerWidth - padding ? "right" : "left");
+    }
+    setIsDownloadMenuOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (!isDownloadMenuOpen) return;
+    const handleResize = () => {
+      if (downloadBtnRef.current && typeof window !== "undefined") {
+        const rect = downloadBtnRef.current.getBoundingClientRect();
+        const dropdownWidth = 270;
+        const padding = 16;
+        setMenuAlignment(rect.left + dropdownWidth > window.innerWidth - padding ? "right" : "left");
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isDownloadMenuOpen]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -199,12 +225,12 @@ export default function Page() {
                   </Button>
 
                   {/* Download Button with Dropdown Menu */}
-                  <div className="relative inline-flex items-center z-40">
+                  <div ref={downloadBtnRef} className="relative inline-flex items-center z-40">
                     <Button
                       variant="outline"
                       size="sm"
                       className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
-                      onClick={() => setIsDownloadMenuOpen((prev) => !prev)}
+                      onClick={toggleDownloadMenu}
                       aria-expanded={isDownloadMenuOpen}
                       aria-haspopup="true"
                     >
@@ -230,7 +256,10 @@ export default function Page() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 6, scale: 0.96 }}
                             transition={{ duration: 0.15, ease: "easeOut" }}
-                            className="absolute left-0 top-full mt-2 z-50 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-popover text-popover-foreground p-2 shadow-2xl backdrop-blur-xl dark:bg-card dark:border-border/80"
+                            className={cn(
+                              "absolute top-full mt-2 z-50 w-[270px] sm:w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-popover text-popover-foreground p-2 shadow-2xl backdrop-blur-xl dark:bg-card dark:border-border/80",
+                              menuAlignment === "right" ? "right-0" : "left-0"
+                            )}
                           >
                             <div className="px-2 py-1 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                               Select CV to Download

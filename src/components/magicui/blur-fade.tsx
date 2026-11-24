@@ -1,12 +1,15 @@
 "use client";
 
-import { motion, useInView, UseInViewOptions, Variants } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, UseInViewOptions, Variants } from "framer-motion";
+import { useRef } from "react";
 
 interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
-  variant?: Variants;
+  variant?: {
+    hidden: { y: number };
+    visible: { y: number };
+  };
   duration?: number;
   delay?: number;
   yOffset?: number;
@@ -14,68 +17,51 @@ interface BlurFadeProps {
   inViewMargin?: UseInViewOptions["margin"];
   blur?: string;
 }
-
 const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.7,
+  duration = 0.28,
   delay = 0,
-  yOffset = 14,
+  yOffset = 6,
   inView = true,
-  inViewMargin = "60px",
-  blur = "10px",
+  inViewMargin = "40px",
+  blur = "0px",
 }: BlurFadeProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
-  const [hasRevealed, setHasRevealed] = useState(false);
-  const [animationDone, setAnimationDone] = useState(false);
-
-  useEffect(() => {
-    if (inViewResult || !inView) {
-      setHasRevealed(true);
-    }
-  }, [inViewResult, inView]);
-
-  if (animationDone) {
-    return (
-      <div ref={ref} className={className}>
-        {children}
-      </div>
-    );
-  }
-
+  const isInView = !inView || inViewResult;
   const defaultVariants: Variants = {
     hidden: {
       y: yOffset,
       opacity: 0,
-      filter: `blur(${blur})`,
+      ...(blur && blur !== "0px" ? { filter: `blur(${blur})` } : {}),
     },
     visible: {
       y: 0,
       opacity: 1,
-      filter: "blur(0px)",
+      filter: "none",
     },
   };
-
   const combinedVariants = variant || defaultVariants;
-
   return (
-    <motion.div
-      ref={ref}
-      initial={hasRevealed ? false : "hidden"}
-      animate={hasRevealed || inViewResult || !inView ? "visible" : "hidden"}
-      variants={combinedVariants}
-      onAnimationComplete={() => setAnimationDone(true)}
-      transition={{
-        delay: hasRevealed ? 0 : Math.min(delay, 0.12),
-        duration,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        exit="hidden"
+        variants={combinedVariants}
+        transition={{
+          delay: Math.min(delay, 0.12),
+          duration,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className={className}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

@@ -22,6 +22,7 @@ import {
   DownloadIcon,
   ExternalLinkIcon,
   EyeIcon,
+  FileTextIcon,
   GraduationCapIcon,
   LayersIcon,
   MailIcon,
@@ -34,9 +35,33 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const BLUR_FADE_DELAY = 0.04;
+
+const RESUME_VARIANTS = {
+  specialised: {
+    label: "Specialised (AI and Robotics)",
+    shortLabel: "Specialised CV",
+    url: "/Mohammad_Fayas_Khan_Specialised_CV.pdf",
+    filename: "Mohammad_Fayas_Khan_Specialised_CV.pdf",
+    title: "Mohammad Fayas Khan Specialised CV",
+    badge: "AI Systems and Edge",
+    subtitle: "Specialised in LLMs, Agentic AI, Computer Vision, and Edge Robotics",
+    description: "Focuses on Large Language Models, PyTorch, YOLO, and Autonomous Systems.",
+  },
+  general: {
+    label: "General (Full-Stack and CS)",
+    shortLabel: "General CV",
+    url: "/Mohammad_Fayas_Khan_General_CV.pdf",
+    filename: "Mohammad_Fayas_Khan_General_CV.pdf",
+    title: "Mohammad Fayas Khan General CV",
+    badge: "Comprehensive CS",
+    subtitle: "Core Computer Science, Full-Stack Development, and Systems Engineering",
+    description: "Covers Core CS, Data Structures, Algorithms, DBMS, and Web Platforms.",
+  },
+};
 
 const LINEAR_TRANSITION = {
   duration: 0.8,
@@ -62,6 +87,8 @@ export default function Page() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
+  const [cvVariant, setCvVariant] = useState<"specialised" | "general">("specialised");
+  const [isDownloadMenuOpen, setIsDownloadMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -178,75 +205,233 @@ export default function Page() {
                 </span>
               </motion.div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-3">
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button
-                    size="sm"
-                    className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
-                    onClick={() =>
-                      previewFile({
-                        url: "/Mohammad_Fayas_Khan_Resume.pdf",
-                        title: "Mohammad Fayas Khan Resume",
-                        type: "resume",
-                        badge: "Official Resume (PDF)",
-                        subtitle: "AI Systems and Full-Stack Engineer",
-                      })
-                    }
+              {/* Action Buttons and CV Variant Selector */}
+              <div className="flex flex-col gap-3 pt-3">
+                {/* CV Focus Switcher Pill */}
+                <motion.div
+                  variants={LINEAR_VARIANTS}
+                  transition={LINEAR_TRANSITION}
+                  className="flex items-center gap-2 flex-wrap"
+                >
+                  <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                    <SparklesIcon className="size-3 text-primary" />
+                    CV Focus:
+                  </span>
+                  <div className="inline-flex items-center rounded-xl border border-border/70 bg-card/80 p-0.5 text-xs shadow-xs">
+                    <button
+                      type="button"
+                      onClick={() => setCvVariant("specialised")}
+                      className={cn(
+                        "px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5",
+                        cvVariant === "specialised"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <SparklesIcon className="size-3 text-amber-400" />
+                      Specialised (AI and Robotics)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCvVariant("general")}
+                      className={cn(
+                        "px-2.5 py-1 rounded-lg font-medium transition-all flex items-center gap-1.5",
+                        cvVariant === "general"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <FileTextIcon className="size-3" />
+                      General (Full-Stack)
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Primary Action Buttons Row */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
+                    <Button
+                      size="sm"
+                      className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
+                      onClick={() =>
+                        previewFile({
+                          url: RESUME_VARIANTS[cvVariant].url,
+                          title: RESUME_VARIANTS[cvVariant].title,
+                          type: "resume",
+                          badge: RESUME_VARIANTS[cvVariant].badge,
+                          subtitle: RESUME_VARIANTS[cvVariant].subtitle,
+                          defaultVariantIndex: cvVariant === "specialised" ? 0 : 1,
+                          variants: [
+                            {
+                              label: "Specialised (AI and Robotics)",
+                              url: RESUME_VARIANTS.specialised.url,
+                              title: RESUME_VARIANTS.specialised.title,
+                              badge: RESUME_VARIANTS.specialised.badge,
+                              subtitle: RESUME_VARIANTS.specialised.subtitle,
+                              filename: RESUME_VARIANTS.specialised.filename,
+                            },
+                            {
+                              label: "General (Full-Stack and CS)",
+                              url: RESUME_VARIANTS.general.url,
+                              title: RESUME_VARIANTS.general.title,
+                              badge: RESUME_VARIANTS.general.badge,
+                              subtitle: RESUME_VARIANTS.general.subtitle,
+                              filename: RESUME_VARIANTS.general.filename,
+                            },
+                          ],
+                        })
+                      }
+                    >
+                      <EyeIcon className="size-3.5" />
+                      Preview Resume
+                    </Button>
+                  </motion.div>
+
+                  {/* Download Button with Dropdown Menu */}
+                  <motion.div
+                    variants={LINEAR_VARIANTS}
+                    transition={LINEAR_TRANSITION}
+                    className="relative inline-flex items-center"
                   >
-                    <EyeIcon className="size-3.5" />
-                    Preview Resume
-                  </Button>
-                </motion.div>
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm"
-                    onClick={() =>
-                      downloadFile({
-                        url: "/Mohammad_Fayas_Khan_Resume.pdf",
-                        filename: "Mohammad_Fayas_Khan_Resume.pdf",
-                        title: "Mohammad Fayas Khan Resume",
-                      })
-                    }
-                  >
-                    <DownloadIcon className="size-3.5" />
-                    Download
-                  </Button>
-                </motion.div>
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
-                      <BriefcaseIcon className="size-3.5" />
-                      Featured Projects
-                    </Link>
-                  </Button>
-                </motion.div>
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#patents" onClick={(e) => scrollToSection(e, "patents")}>
-                      <ShieldCheckIcon className="size-3.5" />
-                      View Patents
-                    </Link>
-                  </Button>
-                </motion.div>
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
-                    <Link href="#research" onClick={(e) => scrollToSection(e, "research")}>
-                      <BookOpenIcon className="size-3.5" />
-                      Research Paper
-                    </Link>
-                  </Button>
-                </motion.div>
-                <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
-                  <Button asChild variant="ghost" size="sm" className="h-9 gap-1.5 px-3 text-xs font-medium">
-                    <Link href="#contact" onClick={(e) => scrollToSection(e, "contact")}>
-                      <MailIcon className="size-3.5" />
-                      Contact
-                    </Link>
-                  </Button>
-                </motion.div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 gap-1.5 px-3.5 text-xs font-medium shadow-sm rounded-r-none border-r-0"
+                      onClick={() =>
+                        downloadFile({
+                          url: RESUME_VARIANTS[cvVariant].url,
+                          filename: RESUME_VARIANTS[cvVariant].filename,
+                          title: RESUME_VARIANTS[cvVariant].title,
+                        })
+                      }
+                    >
+                      <DownloadIcon className="size-3.5" />
+                      Download ({cvVariant === "specialised" ? "Specialised" : "General"})
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 px-2 text-xs font-medium shadow-sm rounded-l-none"
+                      onClick={() => setIsDownloadMenuOpen((prev) => !prev)}
+                      aria-label="Select resume to download"
+                    >
+                      <ChevronDownIcon
+                        className={cn(
+                          "size-3.5 transition-transform",
+                          isDownloadMenuOpen && "rotate-180"
+                        )}
+                      />
+                    </Button>
+
+                    <AnimatePresence>
+                      {isDownloadMenuOpen && (
+                        <>
+                          <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => setIsDownloadMenuOpen(false)}
+                          />
+                          <motion.div
+                            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 6, scale: 0.95 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute left-0 top-full mt-1.5 z-50 w-72 rounded-2xl border border-border/80 bg-background/95 p-2 shadow-2xl backdrop-blur-xl dark:bg-card/95"
+                          >
+                            <div className="px-2 py-1 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                              Download Resume PDF
+                            </div>
+                            <button
+                              onClick={() => {
+                                downloadFile({
+                                  url: RESUME_VARIANTS.specialised.url,
+                                  filename: RESUME_VARIANTS.specialised.filename,
+                                  title: RESUME_VARIANTS.specialised.title,
+                                });
+                                setIsDownloadMenuOpen(false);
+                              }}
+                              className="w-full text-left rounded-xl p-2 hover:bg-muted transition-colors flex items-start gap-2.5"
+                            >
+                              <div className="size-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                                <SparklesIcon className="size-3.5 text-amber-500" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                                  Specialised CV
+                                  <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.2 rounded font-normal">
+                                    AI and Edge
+                                  </span>
+                                </p>
+                                <p className="text-[11px] text-muted-foreground leading-tight">
+                                  LLMs, Agentic AI, Computer Vision, and Edge Robotics
+                                </p>
+                              </div>
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                downloadFile({
+                                  url: RESUME_VARIANTS.general.url,
+                                  filename: RESUME_VARIANTS.general.filename,
+                                  title: RESUME_VARIANTS.general.title,
+                                });
+                                setIsDownloadMenuOpen(false);
+                              }}
+                              className="w-full text-left rounded-xl p-2 hover:bg-muted transition-colors flex items-start gap-2.5 mt-1"
+                            >
+                              <div className="size-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                                <FileTextIcon className="size-3.5" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                                  General CV
+                                  <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.2 rounded font-normal">
+                                    Full-Stack
+                                  </span>
+                                </p>
+                                <p className="text-[11px] text-muted-foreground leading-tight">
+                                  Core Computer Science, Full-Stack, and Software Engineering
+                                </p>
+                              </div>
+                            </button>
+                          </motion.div>
+                        </>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+
+                  <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
+                    <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                      <Link href="#projects" onClick={(e) => scrollToSection(e, "projects")}>
+                        <BriefcaseIcon className="size-3.5" />
+                        Featured Projects
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
+                    <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                      <Link href="#patents" onClick={(e) => scrollToSection(e, "patents")}>
+                        <ShieldCheckIcon className="size-3.5" />
+                        View Patents
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
+                    <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-medium">
+                      <Link href="#research" onClick={(e) => scrollToSection(e, "research")}>
+                        <BookOpenIcon className="size-3.5" />
+                        Research Paper
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <motion.div variants={LINEAR_VARIANTS} transition={LINEAR_TRANSITION}>
+                    <Button asChild variant="ghost" size="sm" className="h-9 gap-1.5 px-3 text-xs font-medium">
+                      <Link href="#contact" onClick={(e) => scrollToSection(e, "contact")}>
+                        <MailIcon className="size-3.5" />
+                        Contact
+                      </Link>
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </div>
 

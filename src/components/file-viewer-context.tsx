@@ -14,6 +14,16 @@ import {
 } from "lucide-react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { cn } from "@/lib/utils";
+
+export interface PreviewVariant {
+  label: string;
+  url: string;
+  title: string;
+  badge?: string;
+  subtitle?: string;
+  filename?: string;
+}
 
 export interface PreviewFilePayload {
   url: string;
@@ -21,6 +31,8 @@ export interface PreviewFilePayload {
   type?: "pdf" | "patent" | "research" | "certificate" | "resume";
   badge?: string;
   subtitle?: string;
+  variants?: PreviewVariant[];
+  defaultVariantIndex?: number;
 }
 
 export interface DownloadFilePayload {
@@ -56,6 +68,7 @@ export function useFileViewer() {
 
 export function FileViewerProvider({ children }: { children: React.ReactNode }) {
   const [activePreview, setActivePreview] = useState<PreviewFilePayload | null>(null);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [toast, setToast] = useState<ToastState | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -78,6 +91,7 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
   };
 
   const previewFile = (payload: PreviewFilePayload) => {
+    setSelectedVariantIndex(payload.defaultVariantIndex ?? 0);
     showToast(`Opening ${payload.title}`, "Rendering interactive document preview...", "loading", "preview", 1400);
     setActivePreview(payload);
   };
@@ -114,6 +128,18 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activePreview]);
+
+  const currentVariant =
+    activePreview?.variants && activePreview.variants.length > selectedVariantIndex
+      ? activePreview.variants[selectedVariantIndex]
+      : null;
+
+  const activeUrl = currentVariant ? currentVariant.url : activePreview?.url || "";
+  const activeTitle = currentVariant ? currentVariant.title : activePreview?.title || "";
+  const activeSubtitle = currentVariant?.subtitle ?? activePreview?.subtitle;
+  const activeBadge = currentVariant?.badge ?? activePreview?.badge;
+  const activeFilename =
+    currentVariant?.filename || activeUrl.split("/").pop() || "document.pdf";
 
   return (
     <FileViewerContext.Provider
@@ -211,17 +237,17 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
                           <h2 className="text-sm sm:text-base font-bold text-foreground truncate">
-                            {activePreview.title}
+                            {activeTitle}
                           </h2>
-                          {activePreview.badge && (
+                          {activeBadge && (
                             <span className="hidden sm:inline-flex items-center rounded-full bg-primary/10 text-primary px-2 py-0.5 text-[10px] font-medium border border-primary/20 shrink-0">
-                              {activePreview.badge}
+                              {activeBadge}
                             </span>
                           )}
                         </div>
-                        {activePreview.subtitle && (
+                        {activeSubtitle && (
                           <p className="text-xs text-muted-foreground truncate">
-                            {activePreview.subtitle}
+                            {activeSubtitle}
                           </p>
                         )}
                       </div>
@@ -232,9 +258,9 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
                       <button
                         onClick={() =>
                           downloadFile({
-                            url: activePreview.url,
-                            filename: activePreview.url.split("/").pop(),
-                            title: activePreview.title,
+                            url: activeUrl,
+                            filename: activeFilename,
+                            title: activeTitle,
                           })
                         }
                         className="inline-flex items-center gap-1.5 rounded-xl border border-border/70 bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors shadow-xs"
@@ -244,7 +270,7 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
                       </button>
 
                       <a
-                        href={activePreview.url}
+                        href={activeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 rounded-xl border border-border/70 bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors shadow-xs"
@@ -264,21 +290,67 @@ export function FileViewerProvider({ children }: { children: React.ReactNode }) 
                     </div>
                   </div>
 
+                  {/* Variant Switcher Toggle Bar (for General vs Specialised CV) */}
+                  {activePreview.variants && activePreview.variants.length > 1 && (
+                    <div className="px-4 sm:px-6 py-2.5 bg-muted/40 border-b border-border/60 flex items-center justify-between flex-wrap gap-2 shrink-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-foreground flex items-center gap-1">
+                          <SparklesIcon className="size-3.5 text-primary" />
+                          Select Version:
+                        </span>
+                        <div className="inline-flex items-center rounded-xl bg-background/90 p-1 border border-border/80 shadow-xs">
+                          {activePreview.variants.map((variant, idx) => (
+                            <button
+                              key={variant.label}
+                              onClick={() => {
+                                setSelectedVariantIndex(idx);
+                                showToast(
+                                  `Switched to ${variant.label}`,
+                                  variant.subtitle || "Rendering document preview...",
+                                  "loading",
+                                  "preview",
+                                  1000
+                                );
+                              }}
+                              className={cn(
+                                "px-3 py-1 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5",
+                                selectedVariantIndex === idx
+                                  ? "bg-primary text-primary-foreground shadow-xs"
+                                  : "text-muted-foreground hover:text-foreground"
+                              )}
+                            >
+                              {idx === 0 ? (
+                                <SparklesIcon className="size-3 text-amber-500" />
+                              ) : (
+                                <FileTextIcon className="size-3" />
+                              )}
+                              {variant.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[11px] text-muted-foreground hidden sm:block">
+                        Download and New Tab dynamically update with your active selection.
+                      </div>
+                    </div>
+                  )}
+
                   {/* Document Viewport */}
                   <div className="relative flex-1 w-full bg-muted/20 overflow-hidden flex items-center justify-center">
-                    {activePreview.url.match(/\.(jpeg|jpg|png|webp|avif)$/i) ? (
+                    {activeUrl.match(/\.(jpeg|jpg|png|webp|avif)$/i) ? (
                       <div className="size-full overflow-auto p-4 flex items-center justify-center bg-black/20">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={activePreview.url}
-                          alt={activePreview.title}
+                          src={activeUrl}
+                          alt={activeTitle}
                           className="max-h-full max-w-full object-contain rounded-xl shadow-lg"
                         />
                       </div>
                     ) : (
                       <iframe
-                        src={`${activePreview.url}#toolbar=1&navpanes=0`}
-                        title={activePreview.title}
+                        key={activeUrl}
+                        src={`${activeUrl}#toolbar=1&navpanes=0`}
+                        title={activeTitle}
                         className="size-full border-0"
                       />
                     )}

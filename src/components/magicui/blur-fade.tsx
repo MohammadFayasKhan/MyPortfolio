@@ -21,19 +21,27 @@ const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.45,
+  duration = 0.28,
   delay = 0,
-  yOffset = 8,
+  yOffset = 6,
   inView = true,
-  inViewMargin = "-40px",
-  blur = "6px",
+  inViewMargin = "40px",
+  blur = "0px",
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
   const isInView = !inView || inViewResult;
   const defaultVariants: Variants = {
-    hidden: { y: yOffset, opacity: 0, filter: `blur(${blur})` },
-    visible: { y: 0, opacity: 1, filter: "blur(0px)" },
+    hidden: {
+      y: yOffset,
+      opacity: 0,
+      ...(blur && blur !== "0px" ? { filter: `blur(${blur})` } : {}),
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      filter: "none",
+    },
   };
   const combinedVariants = variant || defaultVariants;
   return (
@@ -45,9 +53,9 @@ const BlurFade = ({
         exit="hidden"
         variants={combinedVariants}
         transition={{
-          delay: 0.02 + delay,
+          delay: Math.min(delay, 0.12),
           duration,
-          ease: [0.21, 0.47, 0.32, 0.98],
+          ease: [0.16, 1, 0.3, 1],
         }}
         className={className}
       >

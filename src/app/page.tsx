@@ -181,7 +181,7 @@ export default function Page() {
 
       {/* ===================== ABOUT SECTION ===================== */}
       <section id="about" className="space-y-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 7}>
+        <BlurFade delay={0.02}>
           <div className="flex items-center gap-2">
             <SparklesIcon className="size-4 text-primary" />
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
@@ -189,7 +189,7 @@ export default function Page() {
             </h2>
           </div>
         </BlurFade>
-        <BlurFade delay={BLUR_FADE_DELAY * 8}>
+        <BlurFade delay={0.04}>
           <div className="rounded-2xl border border-border/70 bg-card/60 p-5 sm:p-6 shadow-sm">
             <Markdown className="prose max-w-full text-pretty font-sans text-xs sm:text-sm leading-relaxed text-muted-foreground dark:prose-invert">
               {DATA.summary}
@@ -200,7 +200,7 @@ export default function Page() {
 
       {/* ===================== SKILLS SECTION ===================== */}
       <section id="skills" className="space-y-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 9}>
+        <BlurFade delay={0.02}>
           <div className="flex items-center gap-2">
             <CpuIcon className="size-4 text-primary" />
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
@@ -216,7 +216,7 @@ export default function Page() {
           {Object.entries(DATA.skillsCategorized).map(([category, skillList], id) => (
             <BlurFade
               key={category}
-              delay={BLUR_FADE_DELAY * 10 + id * 0.03}
+              delay={0.03 + (id % 2) * 0.03}
               className="rounded-xl border border-border/70 bg-card p-4 space-y-2.5 hover:border-foreground/20 transition-all hover:shadow-sm"
             >
               <h3 className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -240,7 +240,7 @@ export default function Page() {
 
       {/* ===================== FEATURED PROJECTS ===================== */}
       <section id="projects" className="space-y-6 pt-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 11}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1.5">
             <div className="flex items-center gap-2">
               <BriefcaseIcon className="size-4 text-primary" />
@@ -258,7 +258,7 @@ export default function Page() {
           {DATA.projects.map((project, id) => (
             <BlurFade
               key={project.title}
-              delay={BLUR_FADE_DELAY * 12 + id * 0.04}
+              delay={0.04 + (id % 2) * 0.04}
             >
               <ProjectCard
                 title={project.title}
@@ -279,7 +279,7 @@ export default function Page() {
 
       {/* ===================== PATENTS SECTION ===================== */}
       <section id="patents" className="space-y-5 pt-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 13}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1.5">
             <div className="flex items-center gap-2">
               <ShieldCheckIcon className="size-4 text-primary" />
@@ -297,7 +297,7 @@ export default function Page() {
           {DATA.patents.map((patent, id) => (
             <BlurFade
               key={patent.title}
-              delay={BLUR_FADE_DELAY * 14 + id * 0.04}
+              delay={0.04 + id * 0.03}
             >
               <PatentCard patent={patent} />
             </BlurFade>
@@ -307,7 +307,7 @@ export default function Page() {
 
       {/* ===================== RESEARCH & PUBLICATIONS ===================== */}
       <section id="research" className="space-y-4 pt-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 15}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1.5">
             <div className="flex items-center gap-2">
               <BookOpenIcon className="size-4 text-primary" />
@@ -324,7 +324,7 @@ export default function Page() {
         {DATA.research.map((paper, id) => (
           <BlurFade
             key={paper.title}
-            delay={BLUR_FADE_DELAY * 16 + id * 0.05}
+            delay={0.04 + id * 0.03}
           >
             <ResearchCard
               title={paper.title}
@@ -344,7 +344,7 @@ export default function Page() {
 
       {/* ===================== CERTIFICATIONS WITH PROOF ===================== */}
       <section id="certifications" className="space-y-4 pt-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 17}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1.5">
             <div className="flex items-center gap-2">
               <AwardIcon className="size-4 text-primary" />
@@ -362,7 +362,7 @@ export default function Page() {
           {DATA.certifications.map((cert, id) => (
             <BlurFade
               key={cert.title}
-              delay={BLUR_FADE_DELAY * 18 + id * 0.03}
+              delay={0.03 + (id % 2) * 0.03}
             >
               <CertificationCard certification={cert} />
             </BlurFade>
@@ -372,7 +372,7 @@ export default function Page() {
 
       {/* ===================== ACHIEVEMENTS & COMPETITIONS ===================== */}
       <section id="achievements" className="space-y-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 19}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1">
             <div className="flex items-center gap-2">
               <TrophyIcon className="size-4 text-primary" />
@@ -390,7 +390,7 @@ export default function Page() {
           {DATA.achievements.map((item, id) => (
             <BlurFade
               key={item.title}
-              delay={BLUR_FADE_DELAY * 20 + id * 0.04}
+              delay={0.04 + id * 0.03}
             >
               <ResumeCard
                 title={item.title}
@@ -407,7 +407,7 @@ export default function Page() {
 
       {/* ===================== ADVANCED TRAINING ===================== */}
       <section id="training" className="space-y-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 21}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1">
             <div className="flex items-center gap-2">
               <LayersIcon className="size-4 text-primary" />
@@ -425,7 +425,7 @@ export default function Page() {
           {DATA.training.map((item, id) => (
             <BlurFade
               key={item.title}
-              delay={BLUR_FADE_DELAY * 22 + id * 0.04}
+              delay={0.04 + id * 0.03}
             >
               <ResumeCard
                 title={item.title}
@@ -443,7 +443,7 @@ export default function Page() {
 
       {/* ===================== EDUCATION ===================== */}
       <section id="education" className="space-y-4 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 23}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col space-y-1">
             <div className="flex items-center gap-2">
               <GraduationCapIcon className="size-4 text-primary" />
@@ -461,7 +461,7 @@ export default function Page() {
           {DATA.education.map((edu, id) => (
             <BlurFade
               key={edu.school}
-              delay={BLUR_FADE_DELAY * 24 + id * 0.04}
+              delay={0.04 + id * 0.03}
             >
               <ResumeCard
                 logoUrl={edu.logoUrl}
@@ -481,7 +481,7 @@ export default function Page() {
 
       {/* ===================== CONTACT SECTION ===================== */}
       <section id="contact" className="space-y-6 pt-6 border-t border-border/60 scroll-mt-20">
-        <BlurFade delay={BLUR_FADE_DELAY * 25}>
+        <BlurFade delay={0.02}>
           <div className="flex flex-col items-center text-center space-y-3 max-w-xl mx-auto">
             <div className="inline-block rounded-lg bg-primary/10 text-primary border border-primary/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
               Get in Touch
@@ -496,7 +496,7 @@ export default function Page() {
         </BlurFade>
 
         {/* Contact Links Grid */}
-        <BlurFade delay={BLUR_FADE_DELAY * 26}>
+        <BlurFade delay={0.04}>
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 max-w-2xl mx-auto pt-2">
             <Button asChild size="lg" className="h-11 gap-2.5 px-4 text-xs sm:text-sm font-semibold shadow-sm w-full sm:w-auto shrink-0">
               <a href={`mailto:${DATA.contact.email}`} aria-label={`Email ${DATA.name} at ${DATA.contact.email}`} title={DATA.contact.email}>
@@ -528,7 +528,7 @@ export default function Page() {
         </BlurFade>
 
         {/* Footer */}
-        <BlurFade delay={BLUR_FADE_DELAY * 27}>
+        <BlurFade delay={0.06}>
           <footer className="pt-8 text-center text-xs text-muted-foreground/70 border-t border-border/40 space-y-1">
             <p>© {new Date().getFullYear()} Mohammad Fayas Khan. Built with Next.js, TypeScript, and Tailwind CSS.</p>
             <p className="text-[11px] text-muted-foreground/50">
